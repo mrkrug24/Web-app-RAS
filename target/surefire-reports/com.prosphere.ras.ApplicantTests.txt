@@ -1,0 +1,4 @@
+-------------------------------------------------------------------------------
+Test set: com.prosphere.ras.ApplicantTests
+-------------------------------------------------------------------------------
+Tests run: 9, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 9.153 s -- in com.prosphere.ras.ApplicantTests

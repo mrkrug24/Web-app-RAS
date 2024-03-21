@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Applicant.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ras</a> &gt; <a href="index.source.html" class="el_package">com.prosphere.ras.models</a> &gt; <span class="el_source">Applicant.java</span></div><h1>Applicant.java</h1><pre class="source lang-java linenums">package com.prosphere.ras.models;
+import jakarta.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+import lombok.*;
+
+@Entity
+@Table(name = &quot;applicant&quot;)
+public class Applicant {
+    @Id
+    @GeneratedValue
+    @Column(name = &quot;id&quot;)
+    private Integer id;
+
+    @Column(name = &quot;first_name&quot;)
+    @NonNull
+    private String first_name;
+
+    @Column(name = &quot;middle_name&quot;)
+    private String middle_name;
+
+    @Column(name = &quot;last_name&quot;)
+    @NonNull
+    private String last_name;
+
+    @Column(name = &quot;street&quot;)
+    @NonNull
+    private String street;
+
+    @Column(name = &quot;building&quot;)
+    @NonNull
+    private Integer building;
+
+    @Column(name = &quot;apartment&quot;)
+    @NonNull
+    private Integer apartment;
+
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = &quot;sought_post&quot;, referencedColumnName = &quot;id&quot;)
+    private Position sought_post;
+
+    @Column(name = &quot;sought_salary&quot;)
+    private Integer sought_salary;
+
+    @OneToMany(mappedBy = &quot;applicant&quot;, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List&lt;Education&gt; app_ed;
+
+    @OneToMany(mappedBy = &quot;applicant&quot;, fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    private List&lt;Workhistory&gt; app_work;
+
+<span class="fc" id="L51">    public Applicant() {}</span>
+
+<span class="nc" id="L53">    public Applicant(String first_name, String middle_name, String last_name, String street, Integer building,</span>
+                    Integer apartment, Position sought_post, Integer sought_salary) {
+<span class="nc" id="L55">        this.first_name = first_name;</span>
+<span class="nc" id="L56">        this.middle_name = middle_name;</span>
+<span class="nc" id="L57">        this.last_name = last_name;</span>
+<span class="nc" id="L58">        this.street = street;</span>
+<span class="nc" id="L59">        this.building = building;</span>
+<span class="nc" id="L60">        this.apartment = apartment;</span>
+<span class="nc" id="L61">        this.sought_post = sought_post;</span>
+<span class="nc" id="L62">        this.sought_salary = sought_salary;</span>
+<span class="nc" id="L63">        this.app_ed = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L64">        this.app_work = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L65">    }</span>
+
+<span class="fc" id="L67">    public Applicant(String first_name, String middle_name, String last_name, String street, Integer building, Integer apartment) {</span>
+<span class="fc" id="L68">        this.first_name = first_name;</span>
+<span class="fc" id="L69">        this.middle_name = middle_name;</span>
+<span class="fc" id="L70">        this.last_name = last_name;</span>
+<span class="fc" id="L71">        this.street = street;</span>
+<span class="fc" id="L72">        this.building = building;</span>
+<span class="fc" id="L73">        this.apartment = apartment;</span>
+<span class="fc" id="L74">        this.sought_post = null;</span>
+<span class="fc" id="L75">        this.sought_salary = null;</span>
+<span class="fc" id="L76">        this.app_ed = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L77">        this.app_work = new ArrayList&lt;&gt;();</span>
+<span class="fc" id="L78">    }</span>
+
+<span class="nc" id="L80">    public Applicant(String first_name, String middle_name, String last_name, String street, Integer building, Integer apartment, Position sought_post) {</span>
+<span class="nc" id="L81">        this.first_name = first_name;</span>
+<span class="nc" id="L82">        this.middle_name = middle_name;</span>
+<span class="nc" id="L83">        this.last_name = last_name;</span>
+<span class="nc" id="L84">        this.street = street;</span>
+<span class="nc" id="L85">        this.building = building;</span>
+<span class="nc" id="L86">        this.apartment = apartment;</span>
+<span class="nc" id="L87">        this.sought_post = sought_post;</span>
+<span class="nc" id="L88">        this.sought_salary = null;</span>
+<span class="nc" id="L89">        this.app_ed = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L90">        this.app_work = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L91">    }</span>
+
+<span class="nc" id="L93">    public Applicant(String first_name, String last_name, String street, Integer building,</span>
+                    Integer apartment, Position sought_post, Integer sought_salary) {
+<span class="nc" id="L95">        this.first_name = first_name;</span>
+<span class="nc" id="L96">        this.middle_name = null;</span>
+<span class="nc" id="L97">        this.last_name = last_name;</span>
+<span class="nc" id="L98">        this.street = street;</span>
+<span class="nc" id="L99">        this.building = building;</span>
+<span class="nc" id="L100">        this.apartment = apartment;</span>
+<span class="nc" id="L101">        this.sought_post = sought_post;</span>
+<span class="nc" id="L102">        this.sought_salary = sought_salary;</span>
+<span class="nc" id="L103">        this.app_ed = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L104">        this.app_work = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L105">    }</span>
+
+<span class="nc" id="L107">    public Applicant(String first_name, String last_name, String street, Integer building, Integer apartment) {</span>
+<span class="nc" id="L108">        this.first_name = first_name;</span>
+<span class="nc" id="L109">        this.middle_name = null;</span>
+<span class="nc" id="L110">        this.last_name = last_name;</span>
+<span class="nc" id="L111">        this.street = street;</span>
+<span class="nc" id="L112">        this.building = building;</span>
+<span class="nc" id="L113">        this.apartment = apartment;</span>
+<span class="nc" id="L114">        this.sought_post = null;</span>
+<span class="nc" id="L115">        this.sought_salary = null;</span>
+<span class="nc" id="L116">        this.app_ed = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L117">        this.app_work = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L118">    }</span>
+
+<span class="nc" id="L120">    public Applicant(String first_name, String last_name, String street, Integer building, Integer apartment, Position sought_post) {</span>
+<span class="nc" id="L121">        this.first_name = first_name;</span>
+<span class="nc" id="L122">        this.middle_name = null;</span>
+<span class="nc" id="L123">        this.last_name = last_name;</span>
+<span class="nc" id="L124">        this.street = street;</span>
+<span class="nc" id="L125">        this.building = building;</span>
+<span class="nc" id="L126">        this.apartment = apartment;</span>
+<span class="nc" id="L127">        this.sought_post = sought_post;</span>
+<span class="nc" id="L128">        this.sought_salary = null;</span>
+<span class="nc" id="L129">        this.app_ed = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L130">        this.app_work = new ArrayList&lt;&gt;();</span>
+<span class="nc" id="L131">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="fc" id="L135">        final int prime = 31;</span>
+<span class="fc" id="L136">        int result = 1;</span>
+<span class="pc bpc" id="L137" title="1 of 2 branches missed.">        result = prime * result + ((id == null) ? 0 : id.hashCode());</span>
+<span class="pc bpc" id="L138" title="1 of 2 branches missed.">        result = prime * result + ((first_name == null) ? 0 : first_name.hashCode());</span>
+<span class="pc bpc" id="L139" title="1 of 2 branches missed.">        result = prime * result + ((middle_name == null) ? 0 : middle_name.hashCode());</span>
+<span class="pc bpc" id="L140" title="1 of 2 branches missed.">        result = prime * result + ((last_name == null) ? 0 : last_name.hashCode());</span>
+<span class="pc bpc" id="L141" title="1 of 2 branches missed.">        result = prime * result + ((street == null) ? 0 : street.hashCode());</span>
+<span class="pc bpc" id="L142" title="1 of 2 branches missed.">        result = prime * result + ((building == null) ? 0 : building.hashCode());</span>
+<span class="pc bpc" id="L143" title="1 of 2 branches missed.">        result = prime * result + ((apartment == null) ? 0 : apartment.hashCode());</span>
+<span class="pc bpc" id="L144" title="1 of 2 branches missed.">        result = prime * result + ((sought_post == null) ? 0 : sought_post.hashCode());</span>
+<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        result = prime * result + ((sought_salary == null) ? 0 : sought_salary.hashCode());</span>
+<span class="fc" id="L146">        return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="fc bfc" id="L151" title="All 2 branches covered.">        if (this == obj) return true;</span>
+<span class="pc bpc" id="L152" title="1 of 2 branches missed.">        if (obj == null) return false;</span>
+<span class="pc bpc" id="L153" title="1 of 2 branches missed.">        if (getClass() != obj.getClass()) return false;</span>
+
+<span class="fc" id="L155">        Applicant other = (Applicant) obj;</span>
+
+<span class="pc bpc" id="L157" title="1 of 2 branches missed.">        if (id == null) {</span>
+<span class="nc bnc" id="L158" title="All 2 branches missed.">            if (other.id != null) return false;</span>
+<span class="pc bpc" id="L159" title="1 of 2 branches missed.">        } else if (!id.equals(other.id)) return false;</span>
+
+<span class="pc bpc" id="L161" title="1 of 2 branches missed.">        if (first_name == null) {</span>
+<span class="nc bnc" id="L162" title="All 2 branches missed.">            if (other.first_name != null) return false;</span>
+<span class="pc bpc" id="L163" title="1 of 2 branches missed.">        } else if (!first_name.equals(other.first_name)) return false;</span>
+
+<span class="pc bpc" id="L165" title="1 of 2 branches missed.">        if (middle_name == null) {</span>
+<span class="nc bnc" id="L166" title="All 2 branches missed.">            if (other.middle_name != null) return false;</span>
+<span class="pc bpc" id="L167" title="1 of 2 branches missed.">        } else if (!middle_name.equals(other.middle_name)) return false;</span>
+
+<span class="pc bpc" id="L169" title="1 of 2 branches missed.">        if (last_name == null) {</span>
+<span class="nc bnc" id="L170" title="All 2 branches missed.">            if (other.last_name != null) return false;</span>
+<span class="pc bpc" id="L171" title="1 of 2 branches missed.">        } else if (!last_name.equals(other.last_name)) return false;</span>
+
+<span class="pc bpc" id="L173" title="1 of 2 branches missed.">        if (street == null) {</span>
+<span class="nc bnc" id="L174" title="All 2 branches missed.">            if (other.street != null) return false;</span>
+<span class="pc bpc" id="L175" title="1 of 2 branches missed.">        } else if (!street.equals(other.street)) return false;</span>
+
+<span class="pc bpc" id="L177" title="1 of 2 branches missed.">        if (building == null) {</span>
+<span class="nc bnc" id="L178" title="All 2 branches missed.">            if (other.building != null) return false;</span>
+<span class="pc bpc" id="L179" title="1 of 2 branches missed.">        } else if (!building.equals(other.building)) return false;</span>
+
+<span class="pc bpc" id="L181" title="1 of 2 branches missed.">        if (apartment == null) {</span>
+<span class="nc bnc" id="L182" title="All 2 branches missed.">            if (other.apartment != null) return false;</span>
+<span class="pc bpc" id="L183" title="1 of 2 branches missed.">        } else if (!apartment.equals(other.apartment)) return false;</span>
+
+<span class="fc bfc" id="L185" title="All 2 branches covered.">        if (sought_post == null) {</span>
+<span class="pc bpc" id="L186" title="1 of 2 branches missed.">            if (other.sought_post != null) return false;</span>
+<span class="pc bpc" id="L187" title="1 of 2 branches missed.">        } else if (!sought_post.equals(other.sought_post)) return false;</span>
+
+<span class="fc bfc" id="L189" title="All 2 branches covered.">        if (sought_salary == null) {</span>
+<span class="pc bpc" id="L190" title="1 of 2 branches missed.">            if (other.sought_salary != null) return false;</span>
+<span class="pc bpc" id="L191" title="1 of 2 branches missed.">        } else if (!sought_salary.equals(other.sought_salary)) return false;</span>
+
+<span class="fc" id="L193">        return true;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L198">        return &quot;Applicant [id=&quot; + id + &quot;, first_name=&quot; + first_name + &quot;, middle_name=&quot; + middle_name + &quot;, last_name=&quot;</span>
+<span class="nc" id="L199">                + last_name + &quot;, street=&quot; + street + &quot;, building=&quot; + building + &quot;, apartment=&quot; + apartment</span>
+<span class="nc" id="L200">                + &quot;, sought_post=&quot; + sought_post + &quot;, sought_salary=&quot; + sought_salary + &quot;]&quot;;</span>
+    }
+
+    public Integer getId() {
+<span class="fc" id="L204">        return id;</span>
+    }
+
+    public String getFirstName() {
+<span class="fc" id="L208">        return first_name;</span>
+    }
+
+    public void setFirstName(String first_name) {
+<span class="fc" id="L212">        this.first_name = first_name;</span>
+<span class="fc" id="L213">    }</span>
+
+    public String getMiddleName() {
+<span class="fc" id="L216">        return middle_name;</span>
+    }
+
+    public void setMiddleName(String middle_name) {
+<span class="nc" id="L220">        this.middle_name = middle_name;</span>
+<span class="nc" id="L221">    }</span>
+
+    public String getLastName() {
+<span class="fc" id="L224">        return last_name;</span>
+    }
+
+    public void setLastName(String last_name) {
+<span class="nc" id="L228">        this.last_name = last_name;</span>
+<span class="nc" id="L229">    }</span>
+
+    public String getStreet() {
+<span class="fc" id="L232">        return street;</span>
+    }
+
+    public void setStreet(String street) {
+<span class="nc" id="L236">        this.street = street;</span>
+<span class="nc" id="L237">    }</span>
+
+    public Integer getBuilding() {
+<span class="fc" id="L240">        return building;</span>
+    }
+
+    public void setBuilding(Integer building) {
+<span class="nc" id="L244">        this.building = building;</span>
+<span class="nc" id="L245">    }</span>
+
+    public Integer getApartment() {
+<span class="fc" id="L248">        return apartment;</span>
+    }
+
+    public void setApartment(Integer apartment) {
+<span class="nc" id="L252">        this.apartment = apartment;</span>
+<span class="nc" id="L253">    }</span>
+
+    public Position getSoughtPost() {
+<span class="fc" id="L256">        return sought_post;</span>
+    }
+
+    public void setSoughtPost(Position sought_post) {
+<span class="nc" id="L260">        this.sought_post = sought_post;</span>
+<span class="nc" id="L261">    }</span>
+
+    public Integer getSoughtSalary() {
+<span class="fc" id="L264">        return sought_salary;</span>
+    }
+
+    public void setSoughtSalary(Integer sought_salary) {
+<span class="nc" id="L268">        this.sought_salary = sought_salary;</span>
+<span class="nc" id="L269">    }</span>
+
+    public List&lt;Education&gt; getAppEd() {
+<span class="fc" id="L272">        return app_ed;</span>
+    }
+
+    public void setAppEd(List&lt;Education&gt; app_ed) {
+<span class="nc" id="L276">        this.app_ed = app_ed;</span>
+<span class="nc" id="L277">    }</span>
+
+    public List&lt;Workhistory&gt; getAppWork() {
+<span class="fc" id="L280">        return app_work;</span>
+    }
+
+    public void setAppWork(List&lt;Workhistory&gt; app_work) {
+<span class="nc" id="L284">        this.app_work = app_work;</span>
+<span class="nc" id="L285">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

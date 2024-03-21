@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Workhistory.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ras</a> &gt; <a href="index.source.html" class="el_package">com.prosphere.ras.models</a> &gt; <span class="el_source">Workhistory.java</span></div><h1>Workhistory.java</h1><pre class="source lang-java linenums">package com.prosphere.ras.models;
+import java.time.LocalDate;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = &quot;workhistory&quot;)
+@IdClass(WorkhistoryId.class)
+public class Workhistory {
+    @Id
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = &quot;applicant_id&quot;, referencedColumnName = &quot;id&quot;)
+    @NonNull
+    private Applicant applicant;
+
+    @Id
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = &quot;company_id&quot;, referencedColumnName = &quot;id&quot;)
+    @NonNull
+    private Company company;
+
+    @Id
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = &quot;position_id&quot;, referencedColumnName = &quot;id&quot;)
+    @NonNull
+    private Position position;
+
+    @Column(name = &quot;salary&quot;)
+    @NonNull
+    private Integer salary;
+
+    @Column(name = &quot;start_date&quot;)
+    @NonNull
+    private LocalDate start_date;
+
+    @Column(name = &quot;end_date&quot;)
+    private LocalDate end_date;
+
+<span class="fc" id="L39">    public Workhistory() {}</span>
+    
+<span class="fc" id="L41">    public Workhistory(Applicant applicant, Company company, Position position, Integer salary, LocalDate start_date, LocalDate end_date) {</span>
+<span class="fc" id="L42">        this.applicant = applicant;</span>
+<span class="fc" id="L43">        this.company = company;</span>
+<span class="fc" id="L44">        this.position = position;</span>
+<span class="fc" id="L45">        this.salary = salary;</span>
+<span class="fc" id="L46">        this.start_date = start_date;</span>
+<span class="fc" id="L47">        this.end_date = end_date;</span>
+<span class="fc" id="L48">    }</span>
+
+<span class="fc" id="L50">    public Workhistory(Applicant applicant, Company company, Position position, Integer salary, LocalDate start_date) {</span>
+<span class="fc" id="L51">        this.applicant = applicant;</span>
+<span class="fc" id="L52">        this.company = company;</span>
+<span class="fc" id="L53">        this.position = position;</span>
+<span class="fc" id="L54">        this.salary = salary;</span>
+<span class="fc" id="L55">        this.start_date = start_date;</span>
+<span class="fc" id="L56">        this.end_date = null;</span>
+<span class="fc" id="L57">    }</span>
+
+    @Override
+    public int hashCode() {
+<span class="nc" id="L61">        final int prime = 31;</span>
+<span class="nc" id="L62">        int result = 1;</span>
+<span class="nc bnc" id="L63" title="All 2 branches missed.">        result = prime * result + ((applicant == null) ? 0 : applicant.hashCode());</span>
+<span class="nc bnc" id="L64" title="All 2 branches missed.">        result = prime * result + ((company == null) ? 0 : company.hashCode());</span>
+<span class="nc bnc" id="L65" title="All 2 branches missed.">        result = prime * result + ((position == null) ? 0 : position.hashCode());</span>
+<span class="nc bnc" id="L66" title="All 2 branches missed.">        result = prime * result + ((salary == null) ? 0 : salary.hashCode());</span>
+<span class="nc bnc" id="L67" title="All 2 branches missed.">        result = prime * result + ((start_date == null) ? 0 : start_date.hashCode());</span>
+<span class="nc bnc" id="L68" title="All 2 branches missed.">        result = prime * result + ((end_date == null) ? 0 : end_date.hashCode());</span>
+<span class="nc" id="L69">        return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L74" title="1 of 2 branches missed.">        if (this == obj) return true;</span>
+<span class="pc bpc" id="L75" title="1 of 2 branches missed.">        if (obj == null) return false;</span>
+<span class="pc bpc" id="L76" title="1 of 2 branches missed.">        if (getClass() != obj.getClass()) return false;</span>
+
+<span class="fc" id="L78">        Workhistory other = (Workhistory) obj;</span>
+<span class="pc bpc" id="L79" title="1 of 2 branches missed.">        if (applicant == null) {</span>
+<span class="nc bnc" id="L80" title="All 2 branches missed.">            if (other.applicant != null) return false;</span>
+<span class="pc bpc" id="L81" title="1 of 2 branches missed.">        } else if (!applicant.equals(other.applicant)) return false;</span>
+
+<span class="pc bpc" id="L83" title="1 of 2 branches missed.">        if (company == null) {</span>
+<span class="nc bnc" id="L84" title="All 2 branches missed.">            if (other.company != null) return false;</span>
+<span class="pc bpc" id="L85" title="1 of 2 branches missed.">        } else if (!company.equals(other.company)) return false;</span>
+
+<span class="pc bpc" id="L87" title="1 of 2 branches missed.">        if (position == null) {</span>
+<span class="nc bnc" id="L88" title="All 2 branches missed.">            if (other.position != null) return false;</span>
+<span class="pc bpc" id="L89" title="1 of 2 branches missed.">        } else if (!position.equals(other.position)) return false;</span>
+
+<span class="pc bpc" id="L91" title="1 of 2 branches missed.">        if (salary == null) {</span>
+<span class="nc bnc" id="L92" title="All 2 branches missed.">            if (other.salary != null) return false;</span>
+<span class="pc bpc" id="L93" title="1 of 2 branches missed.">        } else if (!salary.equals(other.salary)) return false;</span>
+
+<span class="pc bpc" id="L95" title="1 of 2 branches missed.">        if (start_date == null) {</span>
+<span class="nc bnc" id="L96" title="All 2 branches missed.">            if (other.start_date != null) return false;</span>
+<span class="pc bpc" id="L97" title="1 of 2 branches missed.">        } else if (!start_date.equals(other.start_date)) return false;</span>
+
+<span class="pc bpc" id="L99" title="1 of 2 branches missed.">        if (end_date == null) {</span>
+<span class="nc bnc" id="L100" title="All 2 branches missed.">            if (other.end_date != null) return false;</span>
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        } else if (!end_date.equals(other.end_date)) return false;</span>
+
+<span class="fc" id="L103">        return true;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L108">        return &quot;Workhistory [applicant=&quot; + applicant + &quot;, company=&quot; + company + &quot;, position=&quot; + position + &quot;, salary=&quot;</span>
+<span class="nc" id="L109">                + salary + &quot;, start_date=&quot; + start_date + &quot;, end_date=&quot; + end_date + &quot;]&quot;;</span>
+    }
+
+    public Applicant getApplicant() {
+<span class="fc" id="L113">        return applicant;</span>
+    }
+
+    public void setApplicant(Applicant applicant) {
+<span class="nc" id="L117">        this.applicant = applicant;</span>
+<span class="nc" id="L118">    }</span>
+
+    public Company getCompany() {
+<span class="fc" id="L121">        return company;</span>
+    }
+
+    public void setCompany(Company company) {
+<span class="nc" id="L125">        this.company = company;</span>
+<span class="nc" id="L126">    }</span>
+
+    public Position getPosition() {
+<span class="fc" id="L129">        return position;</span>
+    }
+
+    public void setPosition(Position position) {
+<span class="fc" id="L133">        this.position = position;</span>
+<span class="fc" id="L134">    }</span>
+
+    public Integer getSalary() {
+<span class="fc" id="L137">        return salary;</span>
+    }
+
+    public void setSalary(Integer salary) {
+<span class="nc" id="L141">        this.salary = salary;</span>
+<span class="nc" id="L142">    }</span>
+
+    public LocalDate getStartDate() {
+<span class="fc" id="L145">        return start_date;</span>
+    }
+
+    public void setStartDate(LocalDate start_date) {
+<span class="nc" id="L149">        this.start_date = start_date;</span>
+<span class="nc" id="L150">    }</span>
+
+    public LocalDate getEndDate() {
+<span class="fc" id="L153">        return end_date;</span>
+    }
+
+    public void setEndDate(LocalDate end_date) {
+<span class="nc" id="L157">        this.end_date = end_date;</span>
+<span class="nc" id="L158">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

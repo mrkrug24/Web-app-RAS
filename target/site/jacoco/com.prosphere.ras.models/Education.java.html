@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="ru"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Education.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">ras</a> &gt; <a href="index.source.html" class="el_package">com.prosphere.ras.models</a> &gt; <span class="el_source">Education.java</span></div><h1>Education.java</h1><pre class="source lang-java linenums">package com.prosphere.ras.models;
+import jakarta.persistence.*;
+import lombok.*;
+
+@Entity
+@Table(name = &quot;education&quot;)
+@IdClass(EducationId.class)
+public class Education {
+    @Id
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.PERSIST)
+    @JoinColumn(name = &quot;applicant_id&quot;, referencedColumnName = &quot;id&quot;)
+    @NonNull
+    private Applicant applicant;
+
+    @Id
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = &quot;university_id&quot;, referencedColumnName = &quot;id&quot;)
+    @NonNull
+    private University university;
+
+    @Id
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = &quot;speciality_id&quot;, referencedColumnName = &quot;id&quot;)
+    @NonNull
+    private Speciality speciality;
+
+<span class="fc" id="L27">    public Education() {}</span>
+
+<span class="fc" id="L29">    public Education(Applicant applicant, University university, Speciality speciality) {</span>
+<span class="fc" id="L30">        this.applicant = applicant;</span>
+<span class="fc" id="L31">        this.university = university;</span>
+<span class="fc" id="L32">        this.speciality = speciality;</span>
+<span class="fc" id="L33">    }</span>
+    
+    @Override
+    public int hashCode() {
+<span class="nc" id="L37">        final int prime = 31;</span>
+<span class="nc" id="L38">        int result = 1;</span>
+<span class="nc bnc" id="L39" title="All 2 branches missed.">        result = prime * result + ((applicant == null) ? 0 : applicant.hashCode());</span>
+<span class="nc bnc" id="L40" title="All 2 branches missed.">        result = prime * result + ((university == null) ? 0 : university.hashCode());</span>
+<span class="nc bnc" id="L41" title="All 2 branches missed.">        result = prime * result + ((speciality == null) ? 0 : speciality.hashCode());</span>
+<span class="nc" id="L42">        return result;</span>
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L47" title="1 of 2 branches missed.">        if (this == obj) return true;</span>
+<span class="pc bpc" id="L48" title="1 of 2 branches missed.">        if (obj == null) return false;</span>
+<span class="pc bpc" id="L49" title="1 of 2 branches missed.">        if (getClass() != obj.getClass()) return false;</span>
+
+<span class="fc" id="L51">        Education other = (Education) obj;</span>
+
+<span class="pc bpc" id="L53" title="1 of 2 branches missed.">        if (applicant == null) {</span>
+<span class="nc bnc" id="L54" title="All 2 branches missed.">            if (other.applicant != null) return false;</span>
+<span class="pc bpc" id="L55" title="1 of 2 branches missed.">        } else if (!applicant.equals(other.applicant)) return false;</span>
+
+<span class="pc bpc" id="L57" title="1 of 2 branches missed.">        if (university == null) {</span>
+<span class="nc bnc" id="L58" title="All 2 branches missed.">            if (other.university != null) return false;</span>
+<span class="pc bpc" id="L59" title="1 of 2 branches missed.">        } else if (!university.equals(other.university)) return false;</span>
+
+<span class="pc bpc" id="L61" title="1 of 2 branches missed.">        if (speciality == null) {</span>
+<span class="nc bnc" id="L62" title="All 2 branches missed.">            if (other.speciality != null) return false;</span>
+<span class="pc bpc" id="L63" title="1 of 2 branches missed.">        } else if (!speciality.equals(other.speciality)) return false;</span>
+
+<span class="fc" id="L65">        return true;</span>
+    }
+
+    @Override
+    public String toString() {
+<span class="nc" id="L70">        return &quot;Education [applicant=&quot; + applicant + &quot;, university=&quot; + university + &quot;, speciality=&quot; + speciality + &quot;]&quot;;</span>
+    }
+
+    public Applicant getApplicant() {
+<span class="fc" id="L74">        return applicant;</span>
+    }
+
+    public void setApplicant(Applicant applicant) {
+<span class="nc" id="L78">        this.applicant = applicant;</span>
+<span class="nc" id="L79">    }</span>
+
+    public University getUniversity() {
+<span class="fc" id="L82">        return university;</span>
+    }
+
+    public void setUniversity(University university) {
+<span class="nc" id="L86">        this.university = university;</span>
+<span class="nc" id="L87">    }</span>
+
+    public Speciality getSpeciality() {
+<span class="fc" id="L90">        return speciality;</span>
+    }
+
+    public void setSpeciality(Speciality speciality) {
+<span class="fc" id="L94">        this.speciality = speciality;</span>
+<span class="fc" id="L95">    }</span>
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>
