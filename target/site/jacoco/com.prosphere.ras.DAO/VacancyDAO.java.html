@@ -13,124 +13,93 @@ public class VacancyDAO extends CommonOthersDAO&lt;Vacancy&gt; {
 <span class="fc" id="L13">    }</span>
 
     public Vacancy findByObj(Company company, Position position) {
-<span class="fc" id="L16">        try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
-<span class="fc" id="L17">            Transaction t = session.beginTransaction();</span>
-            try {
-<span class="fc" id="L19">                StringBuilder queryString = new StringBuilder(</span>
-<span class="fc" id="L20">                    &quot;SELECT v FROM Vacancy v &quot; +</span>
-                    &quot;WHERE v.company = :company &quot; +
-                    &quot;AND v.position = :position &quot;);
+<span class="fc" id="L16">        Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession();</span>
+<span class="fc" id="L17">        Transaction t = session.beginTransaction();</span>
+        try {
+<span class="fc" id="L19">            StringBuilder queryString = new StringBuilder(</span>
+                &quot;SELECT v FROM Vacancy v &quot; +
+                &quot;WHERE v.company = :company &quot; +
+                &quot;AND v.position = :position &quot;);
 
-<span class="fc" id="L24">                TypedQuery&lt;Vacancy&gt; query = session.createQuery(queryString.toString(), Vacancy.class);</span>
-                
-<span class="fc" id="L26">                query.setParameter(&quot;company&quot;, company);</span>
-<span class="fc" id="L27">                query.setParameter(&quot;position&quot;, position);</span>
+<span class="fc" id="L24">            TypedQuery&lt;Vacancy&gt; query = session.createQuery(queryString.toString(), Vacancy.class);</span>
+            
+<span class="fc" id="L26">            query.setParameter(&quot;company&quot;, company);</span>
+<span class="fc" id="L27">            query.setParameter(&quot;position&quot;, position);</span>
 
-<span class="fc" id="L29">                Vacancy res = query.getSingleResult();</span>
-<span class="fc" id="L30">                t.commit();</span>
-<span class="fc" id="L31">                return res;</span>
-<span class="fc" id="L32">            } catch (Exception e) {</span>
-<span class="fc" id="L33">                System.out.println(&quot;findByObj error: &quot; + e);</span>
-<span class="fc" id="L34">                t.rollback();</span>
-<span class="fc" id="L35">                return null;</span>
-            }
+<span class="fc" id="L29">            Vacancy res = query.getSingleResult();</span>
+<span class="fc" id="L30">            t.commit();</span>
+<span class="fc" id="L31">            return res;</span>
+<span class="fc" id="L32">        } catch (Exception e) {</span>
+<span class="fc" id="L33">            System.out.println(&quot;findByObj error: &quot; + e);</span>
+<span class="fc" id="L34">            t.rollback();</span>
+<span class="fc" id="L35">            return null;</span>
         }
     }
 
     public void deleteByObj(Company company, Position position) {
-<span class="fc" id="L41">        Vacancy obj = findByObj(company, position);</span>
-<span class="fc bfc" id="L42" title="All 2 branches covered.">        if (obj != null) {</span>
-<span class="fc" id="L43">            try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
-<span class="fc" id="L44">                Transaction t = session.beginTransaction();</span>
-<span class="fc" id="L45">                session.remove(obj);</span>
-<span class="fc" id="L46">                t.commit();</span>
+<span class="fc" id="L40">        Vacancy obj = findByObj(company, position);</span>
+<span class="fc bfc" id="L41" title="All 2 branches covered.">        if (obj != null) {</span>
+<span class="fc" id="L42">            try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
+<span class="fc" id="L43">                Transaction t = session.beginTransaction();</span>
+<span class="fc" id="L44">                session.remove(obj);</span>
+<span class="fc" id="L45">                t.commit();</span>
             }
         } else {
-<span class="fc" id="L49">            System.out.println(&quot;deleteByObj error&quot;);</span>
+<span class="fc" id="L48">            System.out.println(&quot;deleteByObj error&quot;);</span>
         }
-<span class="fc" id="L51">    }</span>
+<span class="fc" id="L50">    }</span>
 
     public List&lt;Vacancy&gt; filter(List&lt;Company&gt; company, List&lt;Position&gt; position, Integer minSalary, Integer maxSalary) {
-<span class="fc" id="L54">        try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
-<span class="fc" id="L55">            Transaction t = session.beginTransaction();</span>
-<span class="fc" id="L56">            StringBuilder queryString = new StringBuilder(&quot;SELECT v FROM Vacancy v WHERE 1=1&quot;);</span>
+<span class="fc" id="L53">        try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
+<span class="fc" id="L54">            Transaction t = session.beginTransaction();</span>
+<span class="fc" id="L55">            StringBuilder queryString = new StringBuilder(&quot;SELECT v FROM Vacancy v WHERE 1=1&quot;);</span>
 
-<span class="pc bpc" id="L58" title="1 of 4 branches missed.">            if (company != null &amp;&amp; !company.isEmpty()) queryString.append(&quot; AND v.company IN :company&quot;);</span>
-<span class="pc bpc" id="L59" title="1 of 4 branches missed.">            if (position != null &amp;&amp; !position.isEmpty()) queryString.append(&quot; AND v.position IN :position&quot;);</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">            if (minSalary != null) queryString.append(&quot; AND v.salary &gt;= :minSalary&quot;);</span>
-<span class="fc bfc" id="L61" title="All 2 branches covered.">            if (maxSalary != null) queryString.append(&quot; AND v.salary &lt;= :maxSalary&quot;);</span>
+<span class="fc bfc" id="L57" title="All 4 branches covered.">            if (company != null &amp;&amp; !company.isEmpty()) queryString.append(&quot; AND v.company IN :company&quot;);</span>
+<span class="fc bfc" id="L58" title="All 4 branches covered.">            if (position != null &amp;&amp; !position.isEmpty()) queryString.append(&quot; AND v.position IN :position&quot;);</span>
+<span class="fc bfc" id="L59" title="All 2 branches covered.">            if (minSalary != null) queryString.append(&quot; AND v.salary &gt;= :minSalary&quot;);</span>
+<span class="fc bfc" id="L60" title="All 2 branches covered.">            if (maxSalary != null) queryString.append(&quot; AND v.salary &lt;= :maxSalary&quot;);</span>
 
-<span class="fc" id="L63">            TypedQuery&lt;Vacancy&gt; query = session.createQuery(queryString.toString(), Vacancy.class);</span>
+<span class="fc" id="L62">            TypedQuery&lt;Vacancy&gt; query = session.createQuery(queryString.toString(), Vacancy.class);</span>
 
-<span class="pc bpc" id="L65" title="1 of 4 branches missed.">            if (company != null &amp;&amp; !company.isEmpty()) query.setParameter(&quot;company&quot;, company);</span>
-<span class="pc bpc" id="L66" title="1 of 4 branches missed.">            if (position != null &amp;&amp; !position.isEmpty()) query.setParameter(&quot;position&quot;, position);</span>
-<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (minSalary != null) query.setParameter(&quot;minSalary&quot;, minSalary);</span>
-<span class="fc bfc" id="L68" title="All 2 branches covered.">            if (maxSalary != null) query.setParameter(&quot;maxSalary&quot;, maxSalary);</span>
+<span class="fc bfc" id="L64" title="All 4 branches covered.">            if (company != null &amp;&amp; !company.isEmpty()) query.setParameter(&quot;company&quot;, company);</span>
+<span class="fc bfc" id="L65" title="All 4 branches covered.">            if (position != null &amp;&amp; !position.isEmpty()) query.setParameter(&quot;position&quot;, position);</span>
+<span class="fc bfc" id="L66" title="All 2 branches covered.">            if (minSalary != null) query.setParameter(&quot;minSalary&quot;, minSalary);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (maxSalary != null) query.setParameter(&quot;maxSalary&quot;, maxSalary);</span>
 
-<span class="fc" id="L70">            List&lt;Vacancy&gt; res = query.getResultList();</span>
-<span class="fc" id="L71">            t.commit();</span>
+<span class="fc" id="L69">            List&lt;Vacancy&gt; res = query.getResultList();</span>
+<span class="fc" id="L70">            t.commit();</span>
 
-<span class="fc" id="L73">            return res;</span>
+<span class="fc" id="L72">            return res;</span>
         }
     }
 
-    // public List&lt;Applicant&gt; findSuitableResumes(Vacancy obj) {
-    //     try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {
-    //         Transaction t = session.beginTransaction();
-    //         StringBuilder queryString = new StringBuilder(&quot;SELECT a FROM Applicant a &quot;);
-
-    //         queryString.append(&quot; WHERE a.sought_post = :position&quot;);
-    //         if (obj.getSalary() != null) queryString.append(&quot; AND (a.sought_salary IS NULL OR a.sought_salary &lt;= :salary)&quot;);
-    //         if (obj.getReqSpec() != null) queryString.append(&quot; AND EXISTS (SELECT 1 FROM Education ed WHERE ed.applicant = a AND ed.speciality = :speciality) &quot;);
-
-    //         if (obj.getReqExp() != null) {
-    //             queryString.append(&quot; AND EXISTS &quot;);
-    //             queryString.append(&quot;(WITH TotalExperience AS ((SELECT SUM(CASE WHEN wh.end_date IS NULL THEN CURRENT_DATE - wh.start_date ELSE wh.end_date - wh.start_date END) / 365) AS totalExperience &quot;);
-    //             queryString.append(&quot;FROM Workhistory wh WHERE wh.applicant = a AND wh.position = :position GROUP BY wh.applicant) &quot;);
-    //             queryString.append(&quot;SELECT 1 FROM TotalExperience WHERE totalExperience &gt;= :experience)&quot;);
-    //         }
-
-    //         TypedQuery&lt;Applicant&gt; query = session.createQuery(queryString.toString(), Applicant.class);
-    
-    //         query.setParameter(&quot;position&quot;, obj.getPosition());
-    //         if (obj.getSalary() != null) query.setParameter(&quot;salary&quot;, obj.getSalary());
-    //         query.setParameter(&quot;speciality&quot;, obj.getReqSpec());
-    //         if (obj.getReqExp() != null) query.setParameter(&quot;experience&quot;, obj.getReqExp());
-
-    //         List&lt;Applicant&gt; res = query.getResultList();
-    //         t.commit();
-    
-    //         return res;
-    //     }
-    // }
-
     public List&lt;Applicant&gt; findSuitableResumes(Vacancy obj) {
-<span class="fc" id="L108">        try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
-<span class="fc" id="L109">            Transaction t = session.beginTransaction();</span>
-<span class="fc" id="L110">            StringBuilder queryString = new StringBuilder(&quot;SELECT a FROM Applicant a &quot;);</span>
+<span class="fc" id="L77">        try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
+<span class="fc" id="L78">            Transaction t = session.beginTransaction();</span>
+<span class="fc" id="L79">            StringBuilder queryString = new StringBuilder(&quot;SELECT a FROM Applicant a &quot;);</span>
     
-<span class="fc" id="L112">            queryString.append(&quot; WHERE a.sought_post = :position&quot;);</span>
-<span class="pc bpc" id="L113" title="1 of 2 branches missed.">            if (obj.getSalary() != null) queryString.append(&quot; AND (a.sought_salary IS NULL OR a.sought_salary &lt;= :salary)&quot;);</span>
-<span class="pc bpc" id="L114" title="1 of 2 branches missed.">            if (obj.getReqSpec() != null) queryString.append(&quot; AND EXISTS (SELECT 1 FROM Education ed WHERE ed.applicant = a AND ed.speciality = :speciality) &quot;);</span>
+<span class="fc" id="L81">            queryString.append(&quot; WHERE a.sought_post = :position&quot;);</span>
+<span class="fc bfc" id="L82" title="All 2 branches covered.">            if (obj.getSalary() != null) queryString.append(&quot; AND (a.sought_salary IS NULL OR a.sought_salary &lt;= :salary)&quot;);</span>
+<span class="fc bfc" id="L83" title="All 2 branches covered.">            if (obj.getReqSpec() != null) queryString.append(&quot; AND EXISTS (SELECT 1 FROM Education ed WHERE ed.applicant = a AND ed.speciality = :speciality) &quot;);</span>
     
-<span class="pc bpc" id="L116" title="1 of 2 branches missed.">            if (obj.getReqExp() != null) {</span>
-<span class="fc" id="L117">                queryString.append(&quot; AND EXISTS &quot;);</span>
-<span class="fc" id="L118">                queryString.append(&quot;(SELECT 1 FROM (SELECT SUM(CASE WHEN wh.end_date IS NULL THEN CURRENT_DATE - wh.start_date ELSE wh.end_date - wh.start_date END) / 365 AS totalExperience &quot;);</span>
-<span class="fc" id="L119">                queryString.append(&quot;FROM Workhistory wh WHERE wh.applicant = a AND wh.position = :position GROUP BY wh.applicant) AS TotalExperience &quot;);</span>
-<span class="fc" id="L120">                queryString.append(&quot;WHERE TotalExperience.totalExperience &gt;= :experience)&quot;);</span>
+<span class="fc bfc" id="L85" title="All 2 branches covered.">            if (obj.getReqExp() != null) {</span>
+<span class="fc" id="L86">                queryString.append(&quot; AND EXISTS &quot;);</span>
+<span class="fc" id="L87">                queryString.append(&quot;(SELECT 1 FROM (SELECT SUM(CASE WHEN wh.end_date IS NULL THEN CURRENT_DATE - wh.start_date ELSE wh.end_date - wh.start_date END) / 365 AS totalExperience &quot;);</span>
+<span class="fc" id="L88">                queryString.append(&quot;FROM Workhistory wh WHERE wh.applicant = a AND wh.position = :position GROUP BY wh.applicant) AS TotalExperience &quot;);</span>
+<span class="fc" id="L89">                queryString.append(&quot;WHERE TotalExperience.totalExperience &gt;= :experience)&quot;);</span>
             }
     
-<span class="fc" id="L123">            TypedQuery&lt;Applicant&gt; query = session.createQuery(queryString.toString(), Applicant.class);</span>
+<span class="fc" id="L92">            TypedQuery&lt;Applicant&gt; query = session.createQuery(queryString.toString(), Applicant.class);</span>
     
-<span class="fc" id="L125">            query.setParameter(&quot;position&quot;, obj.getPosition());</span>
-<span class="pc bpc" id="L126" title="1 of 2 branches missed.">            if (obj.getSalary() != null) query.setParameter(&quot;salary&quot;, obj.getSalary());</span>
-<span class="fc" id="L127">            query.setParameter(&quot;speciality&quot;, obj.getReqSpec());</span>
-<span class="pc bpc" id="L128" title="1 of 2 branches missed.">            if (obj.getReqExp() != null) query.setParameter(&quot;experience&quot;, obj.getReqExp());</span>
+<span class="fc" id="L94">            query.setParameter(&quot;position&quot;, obj.getPosition());</span>
+<span class="fc bfc" id="L95" title="All 2 branches covered.">            if (obj.getSalary() != null) query.setParameter(&quot;salary&quot;, obj.getSalary());</span>
+<span class="fc bfc" id="L96" title="All 2 branches covered.">            if (obj.getReqSpec() != null) query.setParameter(&quot;speciality&quot;, obj.getReqSpec());</span>
+<span class="fc bfc" id="L97" title="All 2 branches covered.">            if (obj.getReqExp() != null) query.setParameter(&quot;experience&quot;, obj.getReqExp());</span>
     
-<span class="fc" id="L130">            List&lt;Applicant&gt; res = query.getResultList();</span>
-<span class="fc" id="L131">            t.commit();</span>
+<span class="fc" id="L99">            List&lt;Applicant&gt; res = query.getResultList();</span>
+<span class="fc" id="L100">            t.commit();</span>
     
-<span class="fc" id="L133">            return res;</span>
+<span class="fc" id="L102">            return res;</span>
         }
     }
 }

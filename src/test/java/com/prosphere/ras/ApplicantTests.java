@@ -101,10 +101,10 @@ public class ApplicantTests {
         Assertions.assertEquals(Workhistory.size(), 2);
         Assertions.assertEquals(Workhistory.get(0).getApplicant().getId(), 1);
         Assertions.assertEquals(Workhistory.get(1).getApplicant().getId(), 1);
-        Assertions.assertEquals(Workhistory.get(0).getCompany().getId(), 4);
-        Assertions.assertEquals(Workhistory.get(1).getCompany().getId(), 2);
-        Assertions.assertEquals(Workhistory.get(0).getPosition().getId(), 7);
-        Assertions.assertEquals(Workhistory.get(1).getPosition().getId(), 1);
+        Assertions.assertEquals(Workhistory.get(0).getCompany().getId(), 2);
+        Assertions.assertEquals(Workhistory.get(1).getCompany().getId(), 4);
+        Assertions.assertEquals(Workhistory.get(0).getPosition().getId(), 1);
+        Assertions.assertEquals(Workhistory.get(1).getPosition().getId(), 7);
     }
 
     @Test
@@ -117,6 +117,12 @@ public class ApplicantTests {
         Assertions.assertEquals(Vacancy.get(1).getCompany().getId(), 4);
         Assertions.assertEquals(Vacancy.get(0).getPosition().getId(), 1);
         Assertions.assertEquals(Vacancy.get(1).getPosition().getId(), 1);
+
+        Applicant = ApplicantService.findById(3);
+        Vacancy = ApplicantService.findSuitableVacancy(Applicant);
+        Assertions.assertEquals(Vacancy.size(), 1);
+        Assertions.assertEquals(Vacancy.get(0).getCompany().getId(), 2);
+        Assertions.assertEquals(Vacancy.get(0).getPosition().getId(), 2);
     }
 
     @Test
@@ -142,25 +148,34 @@ public class ApplicantTests {
         List<Applicant> Applicant = ApplicantService.filter(null, null, null, null, null);
         Assertions.assertEquals(Applicant.size(), 10);
 
+        // MIX
+        Applicant = ApplicantService.filter(Speciality, Company, Position, 50000, 100000);
+        Assertions.assertEquals(Applicant.size(), 0);
+
         // Speciality
         Applicant = ApplicantService.filter(Speciality, null, null, null, null);
         Assertions.assertEquals(Applicant.size(), 3);
         Assertions.assertEquals(Applicant.get(0).getId(), 5);
         Assertions.assertEquals(Applicant.get(1).getId(), 6);
         Assertions.assertEquals(Applicant.get(2).getId(), 7);
-
+        Speciality = new ArrayList<>();
+        Applicant = ApplicantService.filter(Speciality, null, null, null, null);
+        Assertions.assertEquals(Applicant.size(), 10);
 
         // Company
         Applicant = ApplicantService.filter(null, Company, null, null, null);
-        Assertions.assertEquals(Applicant.size(), 8);
-        Assertions.assertEquals(Applicant.get(0).getId(), 5);
-        Assertions.assertEquals(Applicant.get(1).getId(), 10);
-        Assertions.assertEquals(Applicant.get(2).getId(), 1);
-        Assertions.assertEquals(Applicant.get(3).getId(), 2);
-        Assertions.assertEquals(Applicant.get(4).getId(), 3);
-        Assertions.assertEquals(Applicant.get(5).getId(), 9);
-        Assertions.assertEquals(Applicant.get(6).getId(), 6);
-        Assertions.assertEquals(Applicant.get(7).getId(), 4);
+        Assertions.assertEquals(Applicant.size(), 8); 
+        Assertions.assertEquals(Applicant.get(0).getId(), 1);
+        Assertions.assertEquals(Applicant.get(1).getId(), 2);
+        Assertions.assertEquals(Applicant.get(2).getId(), 3);
+        Assertions.assertEquals(Applicant.get(3).getId(), 4);
+        Assertions.assertEquals(Applicant.get(4).getId(), 5);
+        Assertions.assertEquals(Applicant.get(5).getId(), 6);
+        Assertions.assertEquals(Applicant.get(6).getId(), 9);
+        Assertions.assertEquals(Applicant.get(7).getId(), 10);
+        Company = new ArrayList<>();
+        Applicant = ApplicantService.filter(null, Company, null, null, null);
+        Assertions.assertEquals(Applicant.size(), 10);
 
         // Position
         Applicant = ApplicantService.filter(null, null, Position, null, null);
@@ -170,14 +185,19 @@ public class ApplicantTests {
         Assertions.assertEquals(Applicant.get(2).getId(), 3);
         Assertions.assertEquals(Applicant.get(3).getId(), 4);
         Assertions.assertEquals(Applicant.get(4).getId(), 10);
+        Position = new ArrayList<>();
+        Applicant = ApplicantService.filter(null, null, Position, null, null);
+        Assertions.assertEquals(Applicant.size(), 10);
 
         // Salary
         Applicant = ApplicantService.filter(null, null, null, 100000, 120000);
         Assertions.assertEquals(Applicant.size(), 5);
-        Assertions.assertEquals(Applicant.get(0).getId(), 10);
-        Assertions.assertEquals(Applicant.get(1).getId(), 8);
-        Assertions.assertEquals(Applicant.get(2).getId(), 1);
-        Assertions.assertEquals(Applicant.get(3).getId(), 4);
-        Assertions.assertEquals(Applicant.get(4).getId(), 2);
+        Assertions.assertEquals(Applicant.get(0).getId(), 1);
+        Assertions.assertEquals(Applicant.get(1).getId(), 2);
+        Assertions.assertEquals(Applicant.get(2).getId(), 4);
+        Assertions.assertEquals(Applicant.get(3).getId(), 8);
+        Assertions.assertEquals(Applicant.get(4).getId(), 10);
+        Applicant = ApplicantService.filter(null, null, null, null, 50000);
+        Assertions.assertEquals(Applicant.size(), 0);
     }
 }

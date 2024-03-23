@@ -130,6 +130,13 @@ public class VacancyTests {
         List<Applicant> Applicant = VacancyService.findSuitableResumes(Vacancy);
         Assertions.assertEquals(Applicant.size(), 1);
         Assertions.assertEquals(Applicant.get(0).getId(), 5);
+
+        Company =  CompanyService.findById(4);
+        Position = PositionService.findById(6);
+        Vacancy = VacancyService.findByObj(Company, Position);
+        Applicant = VacancyService.findSuitableResumes(Vacancy);
+        Assertions.assertEquals(Applicant.size(), 1);
+        Assertions.assertEquals(Applicant.get(0).getId(), 9);
     }
 
     @Test
@@ -189,7 +196,7 @@ public class VacancyTests {
         Assertions.assertEquals(Vacancy.get(3).getPosition().getId(), 1);
         Assertions.assertEquals(Vacancy.get(4).getPosition().getId(), 1);
         Assertions.assertEquals(Vacancy.get(5).getPosition().getId(), 2);
-
+        
         // Salary
         Vacancy = VacancyService.filter(null, Position, 100000, 150000);
         Assertions.assertEquals(Vacancy.size(), 3);
@@ -199,5 +206,12 @@ public class VacancyTests {
         Assertions.assertEquals(Vacancy.get(0).getPosition().getId(), 1);
         Assertions.assertEquals(Vacancy.get(1).getPosition().getId(), 1);
         Assertions.assertEquals(Vacancy.get(2).getPosition().getId(), 1);
+
+        Company = new ArrayList<>();
+        Vacancy = VacancyService.filter(Company, null, null, null);
+        Assertions.assertEquals(Vacancy.size(), 20);
+        Position = new ArrayList<>();
+        Vacancy = VacancyService.filter(null, Position, null, null);
+        Assertions.assertEquals(Vacancy.size(), 20);
     }
 }

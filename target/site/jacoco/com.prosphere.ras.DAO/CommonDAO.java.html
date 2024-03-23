@@ -44,7 +44,7 @@ public abstract class CommonDAO&lt;T&gt; {
 <span class="fc" id="L44">            } catch (Exception e) {</span>
 <span class="fc" id="L45">                System.out.println(&quot;save error: &quot; + e);</span>
 <span class="fc" id="L46">                t.rollback();</span>
-            }
+<span class="fc" id="L47">            }</span>
         }
 <span class="fc" id="L49">    }</span>
 
@@ -57,7 +57,7 @@ public abstract class CommonDAO&lt;T&gt; {
 <span class="fc" id="L57">            } catch (Exception e) {</span>
 <span class="fc" id="L58">                System.out.println(&quot;update error &quot; + e);</span>
 <span class="fc" id="L59">                t.rollback();</span>
-            }
+<span class="fc" id="L60">            }</span>
         }
 <span class="fc" id="L62">    }</span>
 
@@ -70,7 +70,7 @@ public abstract class CommonDAO&lt;T&gt; {
 <span class="fc" id="L70">            } catch (Exception e) {</span>
 <span class="fc" id="L71">                System.out.println(&quot;delete error: &quot; + e);</span>
 <span class="fc" id="L72">                t.rollback();</span>
-            }
+<span class="fc" id="L73">            }</span>
         }
 <span class="fc" id="L75">    }</span>
 

@@ -50,8 +50,8 @@ public class Applicant {
 
 <span class="fc" id="L51">    public Applicant() {}</span>
 
-<span class="nc" id="L53">    public Applicant(String first_name, String middle_name, String last_name, String street, Integer building,</span>
-                    Integer apartment, Position sought_post, Integer sought_salary) {
+    public Applicant(String first_name, String middle_name, String last_name, String street, Integer building,
+<span class="nc" id="L54">                    Integer apartment, Position sought_post, Integer sought_salary) {</span>
 <span class="nc" id="L55">        this.first_name = first_name;</span>
 <span class="nc" id="L56">        this.middle_name = middle_name;</span>
 <span class="nc" id="L57">        this.last_name = last_name;</span>
@@ -90,8 +90,8 @@ public class Applicant {
 <span class="nc" id="L90">        this.app_work = new ArrayList&lt;&gt;();</span>
 <span class="nc" id="L91">    }</span>
 
-<span class="nc" id="L93">    public Applicant(String first_name, String last_name, String street, Integer building,</span>
-                    Integer apartment, Position sought_post, Integer sought_salary) {
+    public Applicant(String first_name, String last_name, String street, Integer building,
+<span class="nc" id="L94">                    Integer apartment, Position sought_post, Integer sought_salary) {</span>
 <span class="nc" id="L95">        this.first_name = first_name;</span>
 <span class="nc" id="L96">        this.middle_name = null;</span>
 <span class="nc" id="L97">        this.last_name = last_name;</span>
@@ -142,7 +142,7 @@ public class Applicant {
 <span class="pc bpc" id="L142" title="1 of 2 branches missed.">        result = prime * result + ((building == null) ? 0 : building.hashCode());</span>
 <span class="pc bpc" id="L143" title="1 of 2 branches missed.">        result = prime * result + ((apartment == null) ? 0 : apartment.hashCode());</span>
 <span class="pc bpc" id="L144" title="1 of 2 branches missed.">        result = prime * result + ((sought_post == null) ? 0 : sought_post.hashCode());</span>
-<span class="pc bpc" id="L145" title="1 of 2 branches missed.">        result = prime * result + ((sought_salary == null) ? 0 : sought_salary.hashCode());</span>
+<span class="fc bfc" id="L145" title="All 2 branches covered.">        result = prime * result + ((sought_salary == null) ? 0 : sought_salary.hashCode());</span>
 <span class="fc" id="L146">        return result;</span>
     }
 
@@ -196,8 +196,8 @@ public class Applicant {
     @Override
     public String toString() {
 <span class="nc" id="L198">        return &quot;Applicant [id=&quot; + id + &quot;, first_name=&quot; + first_name + &quot;, middle_name=&quot; + middle_name + &quot;, last_name=&quot;</span>
-<span class="nc" id="L199">                + last_name + &quot;, street=&quot; + street + &quot;, building=&quot; + building + &quot;, apartment=&quot; + apartment</span>
-<span class="nc" id="L200">                + &quot;, sought_post=&quot; + sought_post + &quot;, sought_salary=&quot; + sought_salary + &quot;]&quot;;</span>
+                + last_name + &quot;, street=&quot; + street + &quot;, building=&quot; + building + &quot;, apartment=&quot; + apartment
+                + &quot;, sought_post=&quot; + sought_post + &quot;, sought_salary=&quot; + sought_salary + &quot;]&quot;;
     }
 
     public Integer getId() {

@@ -16,20 +16,20 @@ public class HibernateSessionFactory {
             try {
 <span class="fc" id="L17">                sessionFactory = new MetadataSources(registry)</span>
 <span class="fc" id="L18">                                    .addAnnotatedClasses(   </span>
-<span class="fc" id="L19">                                                            Applicant.class, </span>
-<span class="fc" id="L20">                                                            Company.class,</span>
-<span class="fc" id="L21">                                                            Education.class,</span>
-<span class="fc" id="L22">                                                            Position.class,</span>
-<span class="fc" id="L23">                                                            Speciality.class,</span>
-<span class="fc" id="L24">                                                            University.class,</span>
-<span class="fc" id="L25">                                                            Vacancy.class,</span>
-<span class="fc" id="L26">                                                            Workhistory.class)</span>
+                                                            Applicant.class, 
+                                                            Company.class,
+                                                            Education.class,
+                                                            Position.class,
+                                                            Speciality.class,
+                                                            University.class,
+                                                            Vacancy.class,
+                                                            Workhistory.class)
 <span class="fc" id="L27">                                    .buildMetadata()</span>
 <span class="fc" id="L28">                                    .buildSessionFactory();</span>
 <span class="fc" id="L29">            } catch (Exception e) {</span>
 <span class="fc" id="L30">                System.out.println(&quot;getSessionFactory error&quot;);</span>
 <span class="fc" id="L31">                throw e;</span>
-            }
+<span class="fc" id="L32">            }</span>
         }
 
 <span class="fc" id="L35">        return sessionFactory;</span>

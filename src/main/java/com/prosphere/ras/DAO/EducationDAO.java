@@ -13,29 +13,28 @@ public class EducationDAO extends CommonOthersDAO<Education> {
     }
 
     public Education findByObj(Applicant applicant, University university, Speciality speciality) {
-        try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {
-            Transaction t = session.beginTransaction();
-            try {
-                StringBuilder queryString = new StringBuilder(
-                    "SELECT e FROM Education e " +
-                    "WHERE e.applicant = :applicant " +
-                    "AND e.university = :university " +
-                    "AND e.speciality = :speciality");
+        Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+        try {
+            StringBuilder queryString = new StringBuilder(
+                "SELECT e FROM Education e " +
+                "WHERE e.applicant = :applicant " +
+                "AND e.university = :university " +
+                "AND e.speciality = :speciality");
 
-                TypedQuery<Education> query = session.createQuery(queryString.toString(), Education.class);
-                
-                query.setParameter("applicant", applicant);
-                query.setParameter("university", university);
-                query.setParameter("speciality", speciality);
+            TypedQuery<Education> query = session.createQuery(queryString.toString(), Education.class);
+            
+            query.setParameter("applicant", applicant);
+            query.setParameter("university", university);
+            query.setParameter("speciality", speciality);
 
-                Education res = query.getSingleResult();
-                t.commit();
-                return res;
-            } catch (Exception e) {
-                System.out.println("findByObj error: " + e);
-                t.rollback();
-                return null;
-            }
+            Education res = query.getSingleResult();
+            t.commit();
+            return res;
+        } catch (Exception e) {
+            System.out.println("findByObj error: " + e);
+            t.rollback();
+            return null;
         }
     }
 

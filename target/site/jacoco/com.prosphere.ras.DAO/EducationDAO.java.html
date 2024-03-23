@@ -13,43 +13,42 @@ public class EducationDAO extends CommonOthersDAO&lt;Education&gt; {
 <span class="fc" id="L13">    }</span>
 
     public Education findByObj(Applicant applicant, University university, Speciality speciality) {
-<span class="fc" id="L16">        try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
-<span class="fc" id="L17">            Transaction t = session.beginTransaction();</span>
-            try {
-<span class="fc" id="L19">                StringBuilder queryString = new StringBuilder(</span>
-<span class="fc" id="L20">                    &quot;SELECT e FROM Education e &quot; +</span>
-                    &quot;WHERE e.applicant = :applicant &quot; +
-                    &quot;AND e.university = :university &quot; +
-                    &quot;AND e.speciality = :speciality&quot;);
+<span class="fc" id="L16">        Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession();</span>
+<span class="fc" id="L17">        Transaction t = session.beginTransaction();</span>
+        try {
+<span class="fc" id="L19">            StringBuilder queryString = new StringBuilder(</span>
+                &quot;SELECT e FROM Education e &quot; +
+                &quot;WHERE e.applicant = :applicant &quot; +
+                &quot;AND e.university = :university &quot; +
+                &quot;AND e.speciality = :speciality&quot;);
 
-<span class="fc" id="L25">                TypedQuery&lt;Education&gt; query = session.createQuery(queryString.toString(), Education.class);</span>
-                
-<span class="fc" id="L27">                query.setParameter(&quot;applicant&quot;, applicant);</span>
-<span class="fc" id="L28">                query.setParameter(&quot;university&quot;, university);</span>
-<span class="fc" id="L29">                query.setParameter(&quot;speciality&quot;, speciality);</span>
+<span class="fc" id="L25">            TypedQuery&lt;Education&gt; query = session.createQuery(queryString.toString(), Education.class);</span>
+            
+<span class="fc" id="L27">            query.setParameter(&quot;applicant&quot;, applicant);</span>
+<span class="fc" id="L28">            query.setParameter(&quot;university&quot;, university);</span>
+<span class="fc" id="L29">            query.setParameter(&quot;speciality&quot;, speciality);</span>
 
-<span class="fc" id="L31">                Education res = query.getSingleResult();</span>
-<span class="fc" id="L32">                t.commit();</span>
-<span class="fc" id="L33">                return res;</span>
-<span class="fc" id="L34">            } catch (Exception e) {</span>
-<span class="fc" id="L35">                System.out.println(&quot;findByObj error: &quot; + e);</span>
-<span class="fc" id="L36">                t.rollback();</span>
-<span class="fc" id="L37">                return null;</span>
-            }
+<span class="fc" id="L31">            Education res = query.getSingleResult();</span>
+<span class="fc" id="L32">            t.commit();</span>
+<span class="fc" id="L33">            return res;</span>
+<span class="fc" id="L34">        } catch (Exception e) {</span>
+<span class="fc" id="L35">            System.out.println(&quot;findByObj error: &quot; + e);</span>
+<span class="fc" id="L36">            t.rollback();</span>
+<span class="fc" id="L37">            return null;</span>
         }
     }
 
     public void deleteByObj(Applicant applicant, University university, Speciality speciality) {
-<span class="fc" id="L43">        Education obj = findByObj(applicant, university, speciality);</span>
-<span class="fc bfc" id="L44" title="All 2 branches covered.">        if (obj != null) {</span>
-<span class="fc" id="L45">            try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
-<span class="fc" id="L46">                Transaction t = session.beginTransaction();</span>
-<span class="fc" id="L47">                session.remove(obj);</span>
-<span class="fc" id="L48">                t.commit();</span>
+<span class="fc" id="L42">        Education obj = findByObj(applicant, university, speciality);</span>
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (obj != null) {</span>
+<span class="fc" id="L44">            try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
+<span class="fc" id="L45">                Transaction t = session.beginTransaction();</span>
+<span class="fc" id="L46">                session.remove(obj);</span>
+<span class="fc" id="L47">                t.commit();</span>
             }
         } else {
-<span class="fc" id="L51">            System.out.println(&quot;deleteByObj error&quot;);</span>
+<span class="fc" id="L50">            System.out.println(&quot;deleteByObj error&quot;);</span>
         }
-<span class="fc" id="L53">    }</span>
+<span class="fc" id="L52">    }</span>
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

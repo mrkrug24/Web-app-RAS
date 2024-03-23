@@ -25,8 +25,8 @@ public class ApplicantDAO extends CommonDAO<Applicant> {
         try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {
             Transaction t = session.beginTransaction();
             StringBuilder queryString = new StringBuilder("SELECT DISTINCT a FROM Applicant a");
-            if ((company != null && !company.isEmpty()) ||
-                (position != null && !position.isEmpty()) ||
+            if ((position != null && !position.isEmpty()) ||
+                (company != null && !company.isEmpty()) ||
                 (minSalary != null) ||
                 (maxSalary != null)) {
                 queryString.append(" LEFT JOIN a.app_work aw");

@@ -25,30 +25,30 @@ public class ApplicantDAO extends CommonDAO&lt;Applicant&gt; {
 <span class="fc" id="L25">        try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {</span>
 <span class="fc" id="L26">            Transaction t = session.beginTransaction();</span>
 <span class="fc" id="L27">            StringBuilder queryString = new StringBuilder(&quot;SELECT DISTINCT a FROM Applicant a&quot;);</span>
-<span class="pc bpc" id="L28" title="1 of 4 branches missed.">            if ((company != null &amp;&amp; !company.isEmpty()) ||</span>
-<span class="pc bpc" id="L29" title="1 of 4 branches missed.">                (position != null &amp;&amp; !position.isEmpty()) ||</span>
-<span class="fc bfc" id="L30" title="All 2 branches covered.">                (minSalary != null) ||</span>
-<span class="pc bpc" id="L31" title="1 of 2 branches missed.">                (maxSalary != null)) {</span>
+<span class="fc bfc" id="L28" title="All 6 branches covered.">            if ((position != null &amp;&amp; !position.isEmpty()) ||</span>
+<span class="fc bfc" id="L29" title="All 6 branches covered.">                (company != null &amp;&amp; !company.isEmpty()) ||</span>
+                (minSalary != null) ||
+                (maxSalary != null)) {
 <span class="fc" id="L32">                queryString.append(&quot; LEFT JOIN a.app_work aw&quot;);</span>
             }
 
-<span class="pc bpc" id="L35" title="1 of 4 branches missed.">            if (speciality != null &amp;&amp; !speciality.isEmpty()) {</span>
+<span class="fc bfc" id="L35" title="All 4 branches covered.">            if (speciality != null &amp;&amp; !speciality.isEmpty()) {</span>
 <span class="fc" id="L36">                queryString.append(&quot; LEFT JOIN a.app_ed ae&quot;);</span>
             }
 
 <span class="fc" id="L39">            queryString.append(&quot; WHERE 1=1&quot;);</span>
 
-<span class="pc bpc" id="L41" title="1 of 4 branches missed.">            if (speciality != null &amp;&amp; !speciality.isEmpty()) queryString.append(&quot; AND ae.speciality IN :speciality&quot;);</span>
-<span class="pc bpc" id="L42" title="1 of 4 branches missed.">            if (company != null &amp;&amp; !company.isEmpty()) queryString.append(&quot; AND aw.company IN :company&quot;);</span>
-<span class="pc bpc" id="L43" title="1 of 4 branches missed.">            if (position != null &amp;&amp; !position.isEmpty()) queryString.append(&quot; AND aw.position IN :position&quot;);</span>
+<span class="fc bfc" id="L41" title="All 4 branches covered.">            if (speciality != null &amp;&amp; !speciality.isEmpty()) queryString.append(&quot; AND ae.speciality IN :speciality&quot;);</span>
+<span class="fc bfc" id="L42" title="All 4 branches covered.">            if (company != null &amp;&amp; !company.isEmpty()) queryString.append(&quot; AND aw.company IN :company&quot;);</span>
+<span class="fc bfc" id="L43" title="All 4 branches covered.">            if (position != null &amp;&amp; !position.isEmpty()) queryString.append(&quot; AND aw.position IN :position&quot;);</span>
 <span class="fc bfc" id="L44" title="All 2 branches covered.">            if (minSalary != null) queryString.append(&quot; AND aw.salary &gt;= :minSalary&quot;);</span>
 <span class="fc bfc" id="L45" title="All 2 branches covered.">            if (maxSalary != null) queryString.append(&quot; AND aw.salary &lt;= :maxSalary&quot;);</span>
 
 <span class="fc" id="L47">            TypedQuery&lt;Applicant&gt; query = session.createQuery(queryString.toString(), Applicant.class);</span>
 
-<span class="pc bpc" id="L49" title="1 of 4 branches missed.">            if (speciality != null &amp;&amp; !speciality.isEmpty()) query.setParameter(&quot;speciality&quot;, speciality);</span>
-<span class="pc bpc" id="L50" title="1 of 4 branches missed.">            if (company != null &amp;&amp; !company.isEmpty()) query.setParameter(&quot;company&quot;, company);</span>
-<span class="pc bpc" id="L51" title="1 of 4 branches missed.">            if (position != null &amp;&amp; !position.isEmpty()) query.setParameter(&quot;position&quot;, position);</span>
+<span class="fc bfc" id="L49" title="All 4 branches covered.">            if (speciality != null &amp;&amp; !speciality.isEmpty()) query.setParameter(&quot;speciality&quot;, speciality);</span>
+<span class="fc bfc" id="L50" title="All 4 branches covered.">            if (company != null &amp;&amp; !company.isEmpty()) query.setParameter(&quot;company&quot;, company);</span>
+<span class="fc bfc" id="L51" title="All 4 branches covered.">            if (position != null &amp;&amp; !position.isEmpty()) query.setParameter(&quot;position&quot;, position);</span>
 <span class="fc bfc" id="L52" title="All 2 branches covered.">            if (minSalary != null) query.setParameter(&quot;minSalary&quot;, minSalary);</span>
 <span class="fc bfc" id="L53" title="All 2 branches covered.">            if (maxSalary != null) query.setParameter(&quot;maxSalary&quot;, maxSalary);</span>
 
@@ -64,7 +64,7 @@ public class ApplicantDAO extends CommonDAO&lt;Applicant&gt; {
 <span class="fc" id="L64">            Transaction t = session.beginTransaction();</span>
 <span class="fc" id="L65">            StringBuilder queryString = new StringBuilder(&quot;SELECT v FROM Vacancy v &quot;);</span>
 <span class="fc" id="L66">            queryString.append(&quot;WHERE v.position = :sought_post &quot;);</span>
-<span class="pc bpc" id="L67" title="1 of 2 branches missed.">            if (obj.getSoughtSalary() != null) queryString.append(&quot;AND v.salary &gt;= :sought_salary &quot;);</span>
+<span class="fc bfc" id="L67" title="All 2 branches covered.">            if (obj.getSoughtSalary() != null) queryString.append(&quot;AND v.salary &gt;= :sought_salary &quot;);</span>
 <span class="fc" id="L68">            queryString.append(&quot;AND (v.req_spec IS NULL OR v.req_spec IN :speciality) &quot;);</span>
 <span class="fc" id="L69">            queryString.append(&quot;AND (v.req_exp IS NULL OR (SELECT SUM(CASE WHEN wh.end_date IS NULL THEN CURRENT_DATE - wh.start_date ELSE wh.end_date - wh.start_date END) / 365 &quot;);</span>
 <span class="fc" id="L70">            queryString.append(&quot;FROM Workhistory wh WHERE wh.applicant = :applicant AND wh.position = :position) &lt;= v.req_exp)&quot;);</span>
@@ -72,7 +72,7 @@ public class ApplicantDAO extends CommonDAO&lt;Applicant&gt; {
 <span class="fc" id="L72">            TypedQuery&lt;Vacancy&gt; query = session.createQuery(queryString.toString(), Vacancy.class);</span>
             
 <span class="fc" id="L74">            query.setParameter(&quot;sought_post&quot;, obj.getSoughtPost());</span>
-<span class="pc bpc" id="L75" title="1 of 2 branches missed.">            if (obj.getSoughtSalary() != null) query.setParameter(&quot;sought_salary&quot;, obj.getSoughtSalary());</span>
+<span class="fc bfc" id="L75" title="All 2 branches covered.">            if (obj.getSoughtSalary() != null) query.setParameter(&quot;sought_salary&quot;, obj.getSoughtSalary());</span>
 <span class="fc" id="L76">            List&lt;Speciality&gt; speciality = new ArrayList&lt;&gt;();</span>
 <span class="fc bfc" id="L77" title="All 2 branches covered.">            for (Education education : obj.getAppEd()) speciality.add(education.getSpeciality());</span>
 <span class="fc" id="L78">            query.setParameter(&quot;speciality&quot;, speciality);</span>

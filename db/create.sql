@@ -70,7 +70,7 @@ CREATE TABLE workhistory (
 CREATE TABLE vacancy (
     company_id INT NOT NULL,    -- Компания
     position_id INT NOT NULL,   -- Должность
-    salary INT NOT NULL,        -- Зарплата
+    salary INT,                 -- Зарплата
     req_spec INT,               -- Требуемая специальность
     req_exp INT,                -- Требуемый стаж работы
     PRIMARY KEY (company_id, position_id),                                  -- Первичный ключ

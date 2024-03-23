@@ -13,27 +13,26 @@ public class VacancyDAO extends CommonOthersDAO<Vacancy> {
     }
 
     public Vacancy findByObj(Company company, Position position) {
-        try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {
-            Transaction t = session.beginTransaction();
-            try {
-                StringBuilder queryString = new StringBuilder(
-                    "SELECT v FROM Vacancy v " +
-                    "WHERE v.company = :company " +
-                    "AND v.position = :position ");
+        Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
+        Transaction t = session.beginTransaction();
+        try {
+            StringBuilder queryString = new StringBuilder(
+                "SELECT v FROM Vacancy v " +
+                "WHERE v.company = :company " +
+                "AND v.position = :position ");
 
-                TypedQuery<Vacancy> query = session.createQuery(queryString.toString(), Vacancy.class);
-                
-                query.setParameter("company", company);
-                query.setParameter("position", position);
+            TypedQuery<Vacancy> query = session.createQuery(queryString.toString(), Vacancy.class);
+            
+            query.setParameter("company", company);
+            query.setParameter("position", position);
 
-                Vacancy res = query.getSingleResult();
-                t.commit();
-                return res;
-            } catch (Exception e) {
-                System.out.println("findByObj error: " + e);
-                t.rollback();
-                return null;
-            }
+            Vacancy res = query.getSingleResult();
+            t.commit();
+            return res;
+        } catch (Exception e) {
+            System.out.println("findByObj error: " + e);
+            t.rollback();
+            return null;
         }
     }
 
@@ -94,7 +93,7 @@ public class VacancyDAO extends CommonOthersDAO<Vacancy> {
     
             query.setParameter("position", obj.getPosition());
             if (obj.getSalary() != null) query.setParameter("salary", obj.getSalary());
-            query.setParameter("speciality", obj.getReqSpec());
+            if (obj.getReqSpec() != null) query.setParameter("speciality", obj.getReqSpec());
             if (obj.getReqExp() != null) query.setParameter("experience", obj.getReqExp());
     
             List<Applicant> res = query.getResultList();
