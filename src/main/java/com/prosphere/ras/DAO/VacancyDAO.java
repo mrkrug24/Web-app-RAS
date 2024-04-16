@@ -1,10 +1,10 @@
 package com.prosphere.ras.DAO;
 import java.util.List;
-import com.prosphere.ras.HibernateSessionFactory;
-import com.prosphere.ras.models.*;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import jakarta.persistence.TypedQuery;
+import com.prosphere.ras.models.*;
+import com.prosphere.ras.util.HibernateSessionFactory;
 
 public class VacancyDAO extends CommonOthersDAO<Vacancy> {
 
@@ -12,19 +12,19 @@ public class VacancyDAO extends CommonOthersDAO<Vacancy> {
         super(Vacancy.class);
     }
 
-    public Vacancy findByObj(Company company, Position position) {
+    public Vacancy findByObj(Integer companyId, Integer positionId) {
         Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession();
         Transaction t = session.beginTransaction();
         try {
             StringBuilder queryString = new StringBuilder(
                 "SELECT v FROM Vacancy v " +
-                "WHERE v.company = :company " +
-                "AND v.position = :position ");
+                "WHERE v.company.id = :companyId " +
+                "AND v.position.id = :positionId ");
 
             TypedQuery<Vacancy> query = session.createQuery(queryString.toString(), Vacancy.class);
             
-            query.setParameter("company", company);
-            query.setParameter("position", position);
+            query.setParameter("companyId", companyId);
+            query.setParameter("positionId", positionId);
 
             Vacancy res = query.getSingleResult();
             t.commit();
@@ -36,8 +36,9 @@ public class VacancyDAO extends CommonOthersDAO<Vacancy> {
         }
     }
 
-    public void deleteByObj(Company company, Position position) {
-        Vacancy obj = findByObj(company, position);
+
+    public void deleteByObj(Integer companyId, Integer positionId) {
+        Vacancy obj = findByObj(companyId, positionId);
         if (obj != null) {
             try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {
                 Transaction t = session.beginTransaction();
@@ -49,20 +50,20 @@ public class VacancyDAO extends CommonOthersDAO<Vacancy> {
         }
     }
 
-    public List<Vacancy> filter(List<Company> company, List<Position> position, Integer minSalary, Integer maxSalary) {
+    public List<Vacancy> filter(Integer companyId, Integer positionId, Integer minSalary, Integer maxSalary) {
         try (Session session = HibernateSessionFactory.getSessionFactory().getCurrentSession()) {
             Transaction t = session.beginTransaction();
             StringBuilder queryString = new StringBuilder("SELECT v FROM Vacancy v WHERE 1=1");
 
-            if (company != null && !company.isEmpty()) queryString.append(" AND v.company IN :company");
-            if (position != null && !position.isEmpty()) queryString.append(" AND v.position IN :position");
+            if (companyId != null) queryString.append(" AND v.company.id = :companyId");
+            if (positionId != null) queryString.append(" AND v.position.id = :positionId");
             if (minSalary != null) queryString.append(" AND v.salary >= :minSalary");
             if (maxSalary != null) queryString.append(" AND v.salary <= :maxSalary");
 
             TypedQuery<Vacancy> query = session.createQuery(queryString.toString(), Vacancy.class);
 
-            if (company != null && !company.isEmpty()) query.setParameter("company", company);
-            if (position != null && !position.isEmpty()) query.setParameter("position", position);
+            if (companyId != null) query.setParameter("companyId", companyId);
+            if (positionId != null) query.setParameter("positionId", positionId);
             if (minSalary != null) query.setParameter("minSalary", minSalary);
             if (maxSalary != null) query.setParameter("maxSalary", maxSalary);
 
@@ -84,7 +85,7 @@ public class VacancyDAO extends CommonOthersDAO<Vacancy> {
     
             if (obj.getReqExp() != null) {
                 queryString.append(" AND EXISTS ");
-                queryString.append("(SELECT 1 FROM (SELECT SUM(CASE WHEN wh.end_date IS NULL THEN CURRENT_DATE - wh.start_date ELSE wh.end_date - wh.start_date END) / 365 AS totalExperience ");
+                queryString.append("(SELECT 1 FROM (SELECT SUM(CASE WHEN wh.end_date IS NULL THEN TIMESTAMPDIFF(DAY, wh.start_date, CURRENT_DATE) ELSE TIMESTAMPDIFF(DAY, wh.start_date, wh.end_date) END) / 365.0 AS totalExperience ");
                 queryString.append("FROM Workhistory wh WHERE wh.applicant = a AND wh.position = :position GROUP BY wh.applicant) AS TotalExperience ");
                 queryString.append("WHERE TotalExperience.totalExperience >= :experience)");
             }

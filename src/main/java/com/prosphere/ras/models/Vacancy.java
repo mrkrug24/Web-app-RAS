@@ -19,7 +19,6 @@ public class Vacancy {
     private Position position;
 
     @Column(name = "salary")
-    @NonNull
     private Integer salary;
 
     @ManyToOne(fetch = FetchType.EAGER)

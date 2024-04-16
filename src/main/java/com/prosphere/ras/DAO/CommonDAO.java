@@ -1,14 +1,8 @@
 package com.prosphere.ras.DAO;
-import org.hibernate.Session;
 import java.util.List;
-import com.prosphere.ras.HibernateSessionFactory;
+import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-// applicant
-// university
-// speciality
-// position
-// company
+import com.prosphere.ras.util.HibernateSessionFactory;
 
 public abstract class CommonDAO<T> {
     private final Class<T> entityClass;

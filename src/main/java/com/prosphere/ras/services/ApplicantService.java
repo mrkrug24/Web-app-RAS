@@ -8,8 +8,8 @@ public class ApplicantService extends CommonService<Applicant, ApplicantDAO> {
         super(new ApplicantDAO());
     }
 
-    public List<Applicant> filter(List<Speciality> speciality, List<Company> company, List<Position> position, Integer minSalary, Integer maxSalary) {
-        return dao.filter(speciality, company, position, minSalary, maxSalary);
+    public List<Applicant> filter(Integer specialityId, Integer companyId, Integer positionId, Integer minSalary, Integer maxSalary) {
+        return dao.filter(specialityId, companyId, positionId, minSalary, maxSalary);
     }
 
     public List<Workhistory> findWorkhistory(Applicant obj) {
@@ -19,6 +19,10 @@ public class ApplicantService extends CommonService<Applicant, ApplicantDAO> {
     public List<Education> findEducation(Applicant obj) {
         return dao.findEducation(obj);
     }
+
+    // public Integer getTotalExperience(int applicantId, int positionId) {
+    //     return dao.getTotalExperience(applicantId, positionId);
+    // }
 
     public List<Vacancy> findSuitableVacancy(Applicant obj) {
         return dao.findSuitableVacancy(obj);

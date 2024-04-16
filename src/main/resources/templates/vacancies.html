@@ -1,0 +1,207 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Вакансии</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            border: 1px solid #ccc;
+            background-color: #fff;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .nav-buttons a {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
+        <a href="/"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+    </div>
+    <h1>Вакансии</h1>
+    <div class="row justify-content-center mb-3"></div>
+    <div class="row justify-content-center mb-3">
+        <div class="filter-container col-md-8">
+            <form action="/vacancies" method="get" id="filterForm">
+                <div class="form-group">
+                    <div class="dropdown">
+                        <input type="hidden" name="companyVAC" id="companyInputVAC" value=""/>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="companyDropdownVAC" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Выберите компанию
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="companyDropdownVAC">
+                            <a class="dropdown-item" href="#" data-id="">Любая</a>
+                            <th:block th:each="company : ${allCompanies}">
+                                <a class="dropdown-item company-item" href="#" th:text="${company.getName()}" th:attr="data-id=${company.getId()}"></a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="dropdown">
+                        <input type="hidden" name="positionVAC" id="positionInputVAC" value=""/>
+                        <button class="btn btn-secondary dropdown-toggle" type="button" id="positionDropdownVAC" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Выберите должность
+                        </button>
+                        <div class="dropdown-menu" aria-labelledby="positionDropdownVAC">
+                            <a class="dropdown-item" href="#" data-id="">Любая</a>
+                            <th:block th:each="position : ${allPositions}">
+                                <a class="dropdown-item position-item" href="#" th:text="${position.getName()}" th:attr="data-id=${position.getId()}"></a>
+                            </th:block>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-6">
+                        <label for="minSalaryVAC">Минимальная зарплата (руб)</label>
+                        <input type="text" class="form-control" id="minSalaryVAC" name="minSalaryVAC" oninput="this.value = this.value.replace(/^0+(?=\d)|[^0-9]/g, '');">
+                    </div>
+                    <div class="form-group col-md-6">
+                        <label for="maxSalaryVAC">Максимальная зарплата (руб)</label>
+                        <input type="text" class="form-control" id="maxSalaryVAC" name="maxSalaryVAC" oninput="this.value = this.value.replace(/^0+(?=\d)|[^0-9]/g, '');">
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block">Применить фильтр</button>
+            </form>
+        </div>
+    </div>
+    <div class="row justify-content-center mb-3"></div>
+    <table>
+        <thead>
+            <tr>
+                <th>Компания</th>
+                <th>Должность</th>
+                <th>Зарплата</th>
+                <th>Ссылка</th>
+            </tr>
+        </thead>
+        <tbody>
+            <th:block th:each="vacancy : ${vacancies}">
+                <tr>
+                    <td th:text="${vacancy.getCompany().getName()}"></td>
+                    <td th:text="${vacancy.getPosition().getName()}"></td>
+                    <td th:text="${vacancy.getSalary()}"></td>
+                    <td>
+                        <form th:action="@{/vacancy}" method="get">
+                            <input type="hidden" name="companyId" th:value="${vacancy.getCompany().getId()}" />
+                            <input type="hidden" name="positionId" th:value="${vacancy.getPosition().getId()}" />
+                            <button type="submit">Подробнее</button>
+                        </form>
+                    </td>
+                </tr>
+            </th:block>
+        </tbody>
+    </table>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+
+    <script>
+        $(document).ready(function() {
+            var savedCompany = sessionStorage.getItem('selectedCompanyVAC');
+            var savedPosition = sessionStorage.getItem('selectedPositionVAC');
+            var savedMinSalary = sessionStorage.getItem('minSalaryVAC');
+            var savedMaxSalary = sessionStorage.getItem('maxSalaryVAC');
+            if (savedCompany) {
+                $('#companyDropdownVAC').text(savedCompany);
+            }
+            if (savedPosition) {
+                $('#positionDropdownVAC').text(savedPosition);
+            }
+            if (savedMinSalary) {
+                $('#minSalaryVAC').val(savedMinSalary);
+            }
+            if (savedMaxSalary) {
+                $('#maxSalaryVAC').val(savedMaxSalary);
+            }
+        });
+        $('#filterForm').submit(function() {
+            var selectedCompany = $('#companyDropdownVAC').text();
+            var selectedPosition = $('#positionDropdownVAC').text();
+            var minSalary = $('#minSalaryVAC').val();
+            var maxSalary = $('#maxSalaryVAC').val();
+
+            sessionStorage.setItem('selectedCompanyVAC', selectedCompany);
+            sessionStorage.setItem('selectedPositionVAC', selectedPosition);
+            sessionStorage.setItem('minSalaryVAC', minSalary);
+            sessionStorage.setItem('maxSalaryVAC', maxSalary);
+        });
+        function saveFilters() {
+            var company = $('#companyInputVAC').val();
+            var position = $('#positionInputVAC').val();
+            var minSalary = $('#minSalaryVAC').val();
+            var maxSalary = $('#maxSalaryVAC').val();
+
+            sessionStorage.setItem('companyVAC', company);
+            sessionStorage.setItem('positionVAC', position);
+            sessionStorage.setItem('minSalaryVAC', minSalary);
+            sessionStorage.setItem('maxSalaryVAC', maxSalary);
+        }
+        function restoreFilters() {
+            $('#companyInputVAC').val(sessionStorage.getItem('companyVAC'));
+            $('#positionInputVAC').val(sessionStorage.getItem('positionVAC'));
+            $('#minSalaryVAC').val(sessionStorage.getItem('minSalaryVAC'));
+            $('#maxSalaryVAC').val(sessionStorage.getItem('maxSalaryVAC'));
+        }
+        $(document).ready(function() {
+            restoreFilters();
+        });
+        $('#filterForm').submit(function() {
+            saveFilters();
+        });
+        $('.dropdown-item').on('click', function() {
+            var text = $(this).text();
+            var id = $(this).attr('data-id');
+            $(this).closest('.dropdown').find('.dropdown-toggle').text(text).attr('data-id', id);
+            if (id === "") {
+                $(this).closest('.dropdown').find('input[type="hidden"]').val(null);
+            }
+        });
+        $('.company-item').on('click', function() {
+            var text = $(this).text();
+            var id = $(this).attr('data-id');
+            $('#companyDropdownVAC').text(text);
+            $('#companyInputVAC').val(id);
+        });
+        $('.position-item').on('click', function() {
+            var text = $(this).text();
+            var id = $(this).attr('data-id');
+            $('#positionDropdownVAC').text(text);
+            $('#positionInputVAC').val(id);
+        });
+    </script>
+    <div class="row justify-content-center mb-3"></div>
+</body>
+</html>

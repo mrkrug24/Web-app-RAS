@@ -95,4 +95,13 @@ public class CompanyTests {
         Assertions.assertEquals(Vacancy.get(3).getPosition().getId(), 5);
         Assertions.assertEquals(Vacancy.get(4).getPosition().getId(), 7);
     }
+
+    @Test
+    public void testFindNewPositions() {
+        CompanyService CompanyService = new CompanyService();
+        Company company = CompanyService.findById(1);
+        List<Position> pos = CompanyService.findNewPositions(company);
+
+        for (Position p : pos) System.out.println(p.getId());
+    }
 }

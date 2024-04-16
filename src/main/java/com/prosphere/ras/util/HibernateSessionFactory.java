@@ -1,4 +1,4 @@
-package com.prosphere.ras;
+package com.prosphere.ras.util;
 import com.prosphere.ras.models.*;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.MetadataSources;

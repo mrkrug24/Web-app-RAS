@@ -78,3 +78,12 @@ CREATE TABLE vacancy (
     FOREIGN KEY (position_id) REFERENCES position(id) ON DELETE CASCADE,    -- Внешний ключ
     FOREIGN KEY (req_spec) REFERENCES speciality(id) ON DELETE CASCADE      -- Внешний ключ
 );
+
+DROP TABLE education;
+DROP TABLE university;
+DROP TABLE vacancy;
+DROP TABLE workhistory;
+DROP TABLE applicant;
+DROP TABLE company;
+DROP TABLE position;
+DROP TABLE speciality;

@@ -1,0 +1,197 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <title>Добавление вакансии</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .container {
+            margin-top: 50px;
+        }
+        form {
+            max-width: 500px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            font-weight: bold;
+        }
+        input[type="text"], input[type="email"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        button[type="submit"] {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+        }
+        .alert-container {
+            position: fixed;
+            top: 70%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .alert-box {
+            text-align: center;
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 10px;
+            padding: 20px;
+            display: inline-block;
+            box-shadow: 0px 0px 20px 0px rgba(0,0,0,0.3);
+        }
+        .alert-box p {
+            margin: 0;
+            margin-bottom: 10px;
+            white-space: nowrap;
+            color: #000000;
+        }        
+        .alert-box button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .nav-buttons a {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+<div class="nav-buttons">
+    <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
+    <a href="#" onclick="history.go(-1); return false;"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+</div>
+<div class="container">
+    <h1>Добавление вакансии</h1>
+    <div class="row justify-content-center mb-3"></div>
+    <form id="vacancyForm" th:action="@{/saveVacancy}" method="post">
+        <input type="hidden" name="companyId" th:value="${company.getId()}">
+        <div class="form-group">
+            <div class="dropdown">
+                <input type="hidden" name="positionADD" id="positionInputADD" value="" required/>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="positionDropdownADD" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Выберите должность
+                </button>
+                <div class="dropdown-menu" aria-labelledby="positionDropdownADD">
+                    <th:block th:each="position : ${newPositions}">
+                        <a class="dropdown-item position-item" href="#" th:text="${position.getName()}" th:attr="data-id=${position.getId()}"></a>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="dropdown">
+                <input type="hidden" name="specialityADD" id="specialityInputADD" value=""/>
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="specialtyDropdownADD" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Выберите специальность
+                </button>
+                <div class="dropdown-menu" aria-labelledby="specialtyDropdownADD">
+                    <a class="dropdown-item" href="#" data-id="">Любая</a>
+                    <th:block th:each="speciality : ${allSpecialities}">
+                        <a class="dropdown-item specialty-item" href="#" th:text="${speciality.getName()}" th:attr="data-id=${speciality.getId()}"></a>
+                    </th:block>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="name">Стаж (г)</label>
+            <input type="text" id="exp" name="exp" oninput="this.value = this.value.replace(/^0+(?=\d)|[^0-9]/g, '').replace(/^0+/, '');">
+        </div>
+        <div class="form-group">
+            <label for="name">Зарплата (руб)</label>
+            <input type="text" id="salary" name="salary" oninput="this.value = this.value.replace(/^0+(?=\d)|[^0-9]/g, '').replace(/^0+/, '');">
+        </div>
+        <div class="row justify-content-center mb-3"></div>
+        <button type="submit">Сохранить</button>
+    </form>
+</div>
+<div class="alert-container" id="positionAlert" style="display: none;">
+    <div class="alert-box">
+        <p id="positionAlertMessage">Необходимо выбрать должность</p>
+        <button onclick="hidePositionAlert()">Ok</button>
+    </div>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script>
+    $('.dropdown-item').on('click', function() {
+        var text = $(this).text();
+        var id = $(this).attr('data-id');
+        $(this).closest('.dropdown').find('.dropdown-toggle').text(text).attr('data-id', id);
+        if (id === "") {
+            $(this).closest('.dropdown').find('input[type="hidden"]').val(null);
+        }
+    });
+    $('.position-item').on('click', function() {
+        var text = $(this).text();
+        var id = $(this).attr('data-id');
+        $('#positionDropdownADD').text(text);
+        $('#positionInputADD').val(id);
+    });
+    $('.specialty-item').on('click', function() {
+        var text = $(this).text();
+        var id = $(this).attr('data-id');
+        $('#specialtyDropdownADD').text(text);
+        $('#specialityInputADD').val(id);
+    });
+    document.getElementById('vacancyForm').addEventListener('submit', function(event) {
+        var positionValue = document.getElementById('positionInputADD').value;
+        if (!positionValue) {
+            event.preventDefault();
+            showPositionAlert();
+        }
+    });
+    function showPositionAlert() {
+        document.getElementById('positionAlert').style.display = 'block';
+    }
+    function hidePositionAlert() {
+        document.getElementById('positionAlert').style.display = 'none';
+    }
+</script>
+<div class="row justify-content-center mb-3"></div>
+</body>
+</html>

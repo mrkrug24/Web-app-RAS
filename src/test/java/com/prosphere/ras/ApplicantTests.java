@@ -1,9 +1,9 @@
 package com.prosphere.ras;
+import java.util.List;
+import java.util.ArrayList;
+import org.junit.jupiter.api.*;
 import com.prosphere.ras.models.*;
 import com.prosphere.ras.services.*;
-import java.util.ArrayList;
-import java.util.List;
-import org.junit.jupiter.api.*;
 
 public class ApplicantTests {
     @Test
@@ -126,6 +126,14 @@ public class ApplicantTests {
     }
 
     @Test
+    public void testfilter2() {
+        ApplicantService ApplicantService = new ApplicantService();
+        List<Applicant> Applicant = ApplicantService.filter(null, 4, 7, null, null);
+
+        for (Applicant app : Applicant)  System.out.println(app.getId());
+    }
+
+    @Test
     public void testfilter() {
         SpecialityService SpecialityService = new SpecialityService();
         CompanyService CompanyService = new CompanyService();
@@ -144,26 +152,22 @@ public class ApplicantTests {
         Position.add(PositionService.findById(1));
         Position.add(PositionService.findById(2));
 
-        // No filter
         List<Applicant> Applicant = ApplicantService.filter(null, null, null, null, null);
         Assertions.assertEquals(Applicant.size(), 10);
 
-        // MIX
-        Applicant = ApplicantService.filter(Speciality, Company, Position, 50000, 100000);
+        Applicant = ApplicantService.filter(1, 1, 1, 50000, 100000);
         Assertions.assertEquals(Applicant.size(), 0);
 
-        // Speciality
-        Applicant = ApplicantService.filter(Speciality, null, null, null, null);
+        Applicant = ApplicantService.filter(1, null, null, null, null);
         Assertions.assertEquals(Applicant.size(), 3);
         Assertions.assertEquals(Applicant.get(0).getId(), 5);
         Assertions.assertEquals(Applicant.get(1).getId(), 6);
         Assertions.assertEquals(Applicant.get(2).getId(), 7);
         Speciality = new ArrayList<>();
-        Applicant = ApplicantService.filter(Speciality, null, null, null, null);
+        Applicant = ApplicantService.filter(1, null, null, null, null);
         Assertions.assertEquals(Applicant.size(), 10);
 
-        // Company
-        Applicant = ApplicantService.filter(null, Company, null, null, null);
+        Applicant = ApplicantService.filter(null, 1, null, null, null);
         Assertions.assertEquals(Applicant.size(), 8); 
         Assertions.assertEquals(Applicant.get(0).getId(), 1);
         Assertions.assertEquals(Applicant.get(1).getId(), 2);
@@ -174,11 +178,10 @@ public class ApplicantTests {
         Assertions.assertEquals(Applicant.get(6).getId(), 9);
         Assertions.assertEquals(Applicant.get(7).getId(), 10);
         Company = new ArrayList<>();
-        Applicant = ApplicantService.filter(null, Company, null, null, null);
+        Applicant = ApplicantService.filter(null, 1, null, null, null);
         Assertions.assertEquals(Applicant.size(), 10);
 
-        // Position
-        Applicant = ApplicantService.filter(null, null, Position, null, null);
+        Applicant = ApplicantService.filter(null, null, 1, null, null);
         Assertions.assertEquals(Applicant.size(), 5);
         Assertions.assertEquals(Applicant.get(0).getId(), 1);
         Assertions.assertEquals(Applicant.get(1).getId(), 2);
@@ -186,10 +189,9 @@ public class ApplicantTests {
         Assertions.assertEquals(Applicant.get(3).getId(), 4);
         Assertions.assertEquals(Applicant.get(4).getId(), 10);
         Position = new ArrayList<>();
-        Applicant = ApplicantService.filter(null, null, Position, null, null);
+        Applicant = ApplicantService.filter(null, null, 1, null, null);
         Assertions.assertEquals(Applicant.size(), 10);
 
-        // Salary
         Applicant = ApplicantService.filter(null, null, null, 100000, 120000);
         Assertions.assertEquals(Applicant.size(), 5);
         Assertions.assertEquals(Applicant.get(0).getId(), 1);

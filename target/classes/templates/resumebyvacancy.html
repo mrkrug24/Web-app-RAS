@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Информация о соискателе</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            line-height: 1.6;
+            color: #333;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        table {
+            margin-bottom: 30px;
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ccc;
+        }
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+        tr:hover {
+            background-color: #f9f9f9;
+        }
+        .nav-buttons {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+        }
+        .nav-buttons a {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="nav-buttons">
+        <a href="/"><img src="https://www.clipartmax.com/png/middle/198-1984663_216-409-telephone-and-email-icon.png" alt="Домой" width="50" height="50"></a>
+        <a href="#" onclick="history.go(-1); return false;"><img src="https://avatars.mds.yandex.net/i?id=df18a636e3166ff12a4b7e1b2da849601a60446a-10507506-images-thumbs&n=13" alt="Назад" width="50" height="50"></a>
+    </div>
+    <div class="container">
+        <h1>Информация о соискателе</h1>
+        <div class="row justify-content-center mb-3"></div>
+        <table>
+            <tr>
+                <td><strong>Фамилия</strong></td>
+                <td><span th:text="${resume.getLastName()}"></span></td>
+            </tr>
+            <tr>
+                <td><strong>Имя</strong></td>
+                <td><span th:text="${resume.getFirstName()}"></span></td>
+            </tr>
+            <tr>
+                <td><strong>Отчество</strong></td>
+                <td><span th:text="${resume.getMiddleName()}"></span></td>
+            </tr>
+            <tr>
+                <td><strong>Адрес</strong></td>
+                <td><span th:text="${resume.getStreet()}"></span>, <span th:text="${resume.getBuilding()}"></span>, <span th:text="${resume.getApartment()}"></span></td>
+            </tr>
+            <tr>
+                <td><strong>Должность</strong></td>
+                <td><span th:text="${resume.getSoughtPost().getName()}"></span></td>
+            </tr>
+            <tr>
+                <td><strong>Зарплата (руб)</strong></td>
+                <td><span th:text="${resume.getSoughtSalary()}"></span></td>
+            </tr>
+        </table>
+        <h5><strong>Образование</strong></h5>
+        <table>
+            <thead>
+                <tr>
+                    <th>ВУЗ</th>
+                    <th>Специальность</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="edu : ${resume.getAppEd()}">
+                    <tr>
+                        <td><span th:text="${edu.getUniversity().getName()}"></span></td>
+                        <td><span th:text="${edu.getSpeciality().getName()}"></span></td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+        <h5><strong>Опыт работы</strong></h5>
+        <table>
+            <thead>
+                <tr>
+                    <th>Компания</th>
+                    <th>Должность</th>
+                    <th>Зарплата</th>
+                    <th>Приём</th>
+                    <th>Увольнение</th>
+                </tr>
+            </thead>
+            <tbody>
+                <th:block th:each="work : ${resume.getAppWork()}">
+                    <tr>
+                        <td><span th:text="${work.getCompany().getName()}"></span></td>
+                        <td><span th:text="${work.getPosition().getName()}"></span></td>
+                        <td><span th:text="${work.getSalary()}"></span></td>
+                        <td><span th:text="${work.getStartDate()}"></span></td>
+                        <td><span th:text="${work.getEndDate()}"></span></td>
+                    </tr>
+                </th:block>
+            </tbody>
+        </table>
+    </div>
+    <div class="row justify-content-center mb-3"></div>
+</body>
+</html>

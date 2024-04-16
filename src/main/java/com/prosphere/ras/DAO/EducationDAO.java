@@ -1,11 +1,9 @@
 package com.prosphere.ras.DAO;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
-
-import com.prosphere.ras.HibernateSessionFactory;
 import com.prosphere.ras.models.*;
-
 import jakarta.persistence.TypedQuery;
+import com.prosphere.ras.util.HibernateSessionFactory;
 
 public class EducationDAO extends CommonOthersDAO<Education> {
     public EducationDAO(){

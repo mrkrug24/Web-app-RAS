@@ -1,9 +1,8 @@
 package com.prosphere.ras;
-import com.prosphere.ras.models.*;
-import com.prosphere.ras.services.*;
-import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.*;
+import com.prosphere.ras.models.*;
+import com.prosphere.ras.services.*;
 
 public class VacancyTests {
     private CompanyService CompanyService = new CompanyService();
@@ -26,11 +25,9 @@ public class VacancyTests {
 
     @Test
     public void testFindByObj() {
-        Company Company =  CompanyService.findById(1);
-        Position Position = PositionService.findById(1);
-        Vacancy Vacancy = VacancyService.findByObj(Company, Position);
-        Assertions.assertEquals(Vacancy.getCompany(), Company);
-        Assertions.assertEquals(Vacancy.getPosition(), Position);
+        Vacancy Vacancy = VacancyService.findByObj(1, 1);
+        Assertions.assertEquals(Vacancy.getCompany().getId(), 1);
+        Assertions.assertEquals(Vacancy.getPosition().getId(), 1);
     }
 
     @Test
@@ -87,7 +84,7 @@ public class VacancyTests {
         Speciality Speciality = SpecialityService.findById(1);
         Vacancy Vacancy_1 = new Vacancy(Company, Position, 100000, Speciality, 1);
         VacancyService.update(Vacancy_1); // так как detached entity passed to persist
-        Vacancy Vacancy_2 = VacancyService.findByObj(Company, Position);
+        Vacancy Vacancy_2 = VacancyService.findByObj(1, 2);
         Assertions.assertEquals(Vacancy_1, Vacancy_2);
 
         // Update
@@ -95,12 +92,12 @@ public class VacancyTests {
         VacancyService.delete(Vacancy_1);
         Vacancy_1.setReqSpec(Speciality);
         VacancyService.update(Vacancy_1);
-        Vacancy_2 = VacancyService.findByObj(Company, Position);
+        Vacancy_2 = VacancyService.findByObj(1, 6);
         Assertions.assertEquals(Vacancy_1, Vacancy_2);
 
         // Delete
         VacancyService.delete(Vacancy_1);
-        Vacancy_2 = VacancyService.findByObj(Company, Position);
+        Vacancy_2 = VacancyService.findByObj(2, 6);
         Assertions.assertEquals(null, Vacancy_2);
     }
 
@@ -112,28 +109,24 @@ public class VacancyTests {
         Speciality Speciality = SpecialityService.findById(1);
         Vacancy Vacancy_1 = new Vacancy(Company, Position, 100000, Speciality, 1);
         VacancyService.update(Vacancy_1); // так как detached entity passed to persist
-        Vacancy Vacancy_2 = VacancyService.findByObj(Company, Position);
+        Vacancy Vacancy_2 = VacancyService.findByObj(1, 2);
         Assertions.assertEquals(Vacancy_1, Vacancy_2);
 
         // DeleteById
-        VacancyService.deleteByObj(Company, Position);
-        Vacancy_2 = VacancyService.findByObj(Company, Position);
+        VacancyService.deleteByObj(1, 2);
+        Vacancy_2 = VacancyService.findByObj(1, 2);
         Assertions.assertEquals(null, Vacancy_2);
         VacancyService.deleteByObj(null, null);
     }
 
     @Test
     public void testfindSuitableResumes() {
-        Company Company =  CompanyService.findById(1);
-        Position Position = PositionService.findById(3);
-        Vacancy Vacancy = VacancyService.findByObj(Company, Position);
+        Vacancy Vacancy = VacancyService.findByObj(1, 3);
         List<Applicant> Applicant = VacancyService.findSuitableResumes(Vacancy);
         Assertions.assertEquals(Applicant.size(), 1);
         Assertions.assertEquals(Applicant.get(0).getId(), 5);
 
-        Company =  CompanyService.findById(4);
-        Position = PositionService.findById(6);
-        Vacancy = VacancyService.findByObj(Company, Position);
+        Vacancy = VacancyService.findByObj(4, 6);
         Applicant = VacancyService.findSuitableResumes(Vacancy);
         Assertions.assertEquals(Applicant.size(), 1);
         Assertions.assertEquals(Applicant.get(0).getId(), 9);
@@ -141,20 +134,12 @@ public class VacancyTests {
 
     @Test
     public void testfilter() {
-        List<Company> Company = new ArrayList<>();
-        Company.add(CompanyService.findById(1));
-        Company.add(CompanyService.findById(2));
-
-        List<Position> Position = new ArrayList<>();
-        Position.add(PositionService.findById(1));
-        Position.add(PositionService.findById(2));
-
         // No filter
         List<Vacancy> Vacancy = VacancyService.filter(null, null, null, null);
         Assertions.assertEquals(Vacancy.size(), 20);
 
         // Company
-        Vacancy = VacancyService.filter(Company, null, null, null);
+        Vacancy = VacancyService.filter(1, null, null, null);
         Assertions.assertEquals(Vacancy.size(), 12);
         Assertions.assertEquals(Vacancy.get(0).getCompany().getId(), 1);
         Assertions.assertEquals(Vacancy.get(1).getCompany().getId(), 1);
@@ -182,7 +167,7 @@ public class VacancyTests {
         Assertions.assertEquals(Vacancy.get(11).getPosition().getId(), 7);
 
         // Position
-        Vacancy = VacancyService.filter(null, Position, null, null);
+        Vacancy = VacancyService.filter(null, 2, null, null);
         Assertions.assertEquals(Vacancy.size(), 6);
         Assertions.assertEquals(Vacancy.get(0).getCompany().getId(), 1);
         Assertions.assertEquals(Vacancy.get(1).getCompany().getId(), 2);
@@ -198,7 +183,7 @@ public class VacancyTests {
         Assertions.assertEquals(Vacancy.get(5).getPosition().getId(), 2);
         
         // Salary
-        Vacancy = VacancyService.filter(null, Position, 100000, 150000);
+        Vacancy = VacancyService.filter(null, 2, 100000, 150000);
         Assertions.assertEquals(Vacancy.size(), 3);
         Assertions.assertEquals(Vacancy.get(0).getCompany().getId(), 1);
         Assertions.assertEquals(Vacancy.get(1).getCompany().getId(), 3);
@@ -207,11 +192,9 @@ public class VacancyTests {
         Assertions.assertEquals(Vacancy.get(1).getPosition().getId(), 1);
         Assertions.assertEquals(Vacancy.get(2).getPosition().getId(), 1);
 
-        Company = new ArrayList<>();
-        Vacancy = VacancyService.filter(Company, null, null, null);
+        Vacancy = VacancyService.filter(null, null, null, null);
         Assertions.assertEquals(Vacancy.size(), 20);
-        Position = new ArrayList<>();
-        Vacancy = VacancyService.filter(null, Position, null, null);
+        Vacancy = VacancyService.filter(null, null, null, null);
         Assertions.assertEquals(Vacancy.size(), 20);
     }
 }

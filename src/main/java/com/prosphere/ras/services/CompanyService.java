@@ -10,6 +10,14 @@ public class CompanyService extends CommonService<Company, CompanyDAO> {
         super(new CompanyDAO());
     }
 
+    public Company findByName(String name) {
+        return dao.findByName(name);
+    }
+
+    public List<Position> findNewPositions(Company company) {
+        return dao.findNewPositions(company);
+    }
+
     public List<Vacancy> findVacancy(Company obj) {
         return dao.findVacancy(obj);
     }

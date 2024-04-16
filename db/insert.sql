@@ -1,8 +1,8 @@
 -- ВУЗы
 INSERT INTO university VALUES
-(1, 'Московский государственный университет имени М.В. Ломоносова'),
-(2, 'Московский физико-технический институт'),
-(3, 'Национальный исследовательский университет «Высшая школа экономики»');
+(1, 'МГУ имени М.В. Ломоносова'),
+(2, 'МФТИ'),
+(3, 'Высшая школа экономики');
 
 -- Специальности
 INSERT INTO speciality VALUES
@@ -105,14 +105,3 @@ INSERT INTO vacancy VALUES
 (4, 3, 120000, 1, 1),
 (4, 6, NULL, NULL, NULL),
 (4, 7, 250000, 4, 1);
-
-
-DROP TABLE applicant;
-DROP TABLE company;
-DROP TABLE education;
-DROP TABLE position;
-DROP TABLE speciality;
-DROP TABLE university;
-DROP TABLE vacancy;
-DROP TABLE workhistory;
-
