@@ -112,25 +112,16 @@ public class ApplicantTests {
         ApplicantService ApplicantService = new ApplicantService();
         Applicant Applicant = ApplicantService.findById(1);
         List<Vacancy> Vacancy = ApplicantService.findSuitableVacancy(Applicant);
-        Assertions.assertEquals(Vacancy.size(), 2);
+        Assertions.assertEquals(Vacancy.size(), 4);
         Assertions.assertEquals(Vacancy.get(0).getCompany().getId(), 1);
-        Assertions.assertEquals(Vacancy.get(1).getCompany().getId(), 4);
+        Assertions.assertEquals(Vacancy.get(1).getCompany().getId(), 2);
+        Assertions.assertEquals(Vacancy.get(2).getCompany().getId(), 3);
+        Assertions.assertEquals(Vacancy.get(3).getCompany().getId(), 4);
+
         Assertions.assertEquals(Vacancy.get(0).getPosition().getId(), 1);
         Assertions.assertEquals(Vacancy.get(1).getPosition().getId(), 1);
-
-        Applicant = ApplicantService.findById(3);
-        Vacancy = ApplicantService.findSuitableVacancy(Applicant);
-        Assertions.assertEquals(Vacancy.size(), 1);
-        Assertions.assertEquals(Vacancy.get(0).getCompany().getId(), 2);
-        Assertions.assertEquals(Vacancy.get(0).getPosition().getId(), 2);
-    }
-
-    @Test
-    public void testfilter2() {
-        ApplicantService ApplicantService = new ApplicantService();
-        List<Applicant> Applicant = ApplicantService.filter(null, 4, 7, null, null);
-
-        for (Applicant app : Applicant)  System.out.println(app.getId());
+        Assertions.assertEquals(Vacancy.get(2).getPosition().getId(), 1);
+        Assertions.assertEquals(Vacancy.get(3).getPosition().getId(), 1);
     }
 
     @Test

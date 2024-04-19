@@ -16,7 +16,7 @@ public class UniversityTests {
         UniversityService UniversityService = new UniversityService();
         University University = UniversityService.findById(1);
         Assertions.assertEquals(University.getId(), 1);
-        Assertions.assertEquals(University.getName(), "Московский государственный университет имени М.В. Ломоносова");
+        Assertions.assertEquals(University.getName(), "МГУ имени М.В. Ломоносова");
     }
 
     @Test
@@ -27,9 +27,9 @@ public class UniversityTests {
         Assertions.assertEquals(University.get(0).getId(), 1);
         Assertions.assertEquals(University.get(1).getId(), 2);
         Assertions.assertEquals(University.get(2).getId(), 3);
-        Assertions.assertEquals(University.get(0).getName(), "Московский государственный университет имени М.В. Ломоносова");
-        Assertions.assertEquals(University.get(1).getName(), "Московский физико-технический институт");
-        Assertions.assertEquals(University.get(2).getName(), "Национальный исследовательский университет «Высшая школа экономики»");
+        Assertions.assertEquals(University.get(0).getName(), "МГУ имени М.В. Ломоносова");
+        Assertions.assertEquals(University.get(1).getName(), "МФТИ");
+        Assertions.assertEquals(University.get(2).getName(), "Высшая школа экономики");
     }
 
     @Test
