@@ -140,7 +140,11 @@ public class SeleniumTests {
         assertEquals("Специалист по машинному обучению", items.get(77).getText());
         assertEquals("250000", items.get(78).getText());
 
-        assertEquals(20, items.size());
+        assertEquals("VK", items.get(80).getText());
+        assertEquals("Архитектор информационных систем", items.get(81).getText());
+        assertEquals("100000", items.get(82).getText());
+
+        assertEquals(84, items.size());
 
         driver.quit();
     }
@@ -236,7 +240,11 @@ public class SeleniumTests {
         assertEquals("Специалист по машинному обучению", items.get(77).getText());
         assertEquals("250000", items.get(78).getText());
 
-        assertEquals(20, items.size());
+        assertEquals("VK", items.get(80).getText());
+        assertEquals("Архитектор информационных систем", items.get(81).getText());
+        assertEquals("100000", items.get(82).getText());
+
+        assertEquals(84, items.size());
 
         driver.quit();
     }
@@ -277,7 +285,7 @@ public class SeleniumTests {
         assertEquals("Специалист по машинному обучению", items.get(17).getText());
         assertEquals("250000", items.get(18).getText());
 
-        assertEquals(5, items.size());
+        assertEquals(20, items.size());
 
         driver.quit();
     }
@@ -306,7 +314,7 @@ public class SeleniumTests {
         assertEquals("Разработчик мобильных приложений", items.get(5).getText());
         assertEquals("130000", items.get(6).getText());
 
-        assertEquals(2, items.size());
+        assertEquals(8, items.size());
 
         driver.quit();
     }
@@ -341,7 +349,7 @@ public class SeleniumTests {
         assertEquals("Специалист по машинному обучению", items.get(13).getText());
         assertEquals("250000", items.get(14).getText());
 
-        assertEquals(4, items.size());
+        assertEquals(16, items.size());
 
         driver.quit();
     }
@@ -380,7 +388,11 @@ public class SeleniumTests {
         assertEquals("Дизайнер пользовательских интерфейсов", items.get(17).getText());
         assertEquals("120000", items.get(18).getText());
 
-        assertEquals(5, items.size());
+        assertEquals("VK", items.get(20).getText());
+        assertEquals("Архитектор информационных систем", items.get(21).getText());
+        assertEquals("100000", items.get(22).getText());
+
+        assertEquals(24, items.size());
 
         driver.quit();
     }
@@ -626,7 +638,7 @@ public class SeleniumTests {
         assertEquals("Тинькофф", items.get(4).getText());
         assertEquals("Яндекс", items.get(6).getText());
 
-        assertEquals(4, items.size());
+        assertEquals(8, items.size());
 
         driver.quit();
     }
@@ -669,7 +681,7 @@ public class SeleniumTests {
         assertEquals("Специалист по машинному обучению", items.get(12).getText());
         assertEquals("250000", items.get(13).getText());
 
-        assertEquals(5, items.size());
+        assertEquals(15, items.size());
 
         driver.quit();
     }
@@ -717,7 +729,7 @@ public class SeleniumTests {
         assertEquals("Тинькофф", items.get(4).getText());
         assertEquals("Яндекс", items.get(6).getText());
         assertEquals("Сбер", items.get(8).getText());
-        assertEquals(5, items.size());
+        assertEquals(10, items.size());
 
         WebElement detailsButton = driver.findElement(By.xpath("//table/tbody/tr[5]/td/form/button"));
         detailsButton.click();
@@ -734,7 +746,7 @@ public class SeleniumTests {
         assertEquals("Ozon", items.get(2).getText());
         assertEquals("Тинькофф", items.get(4).getText());
         assertEquals("Яндекс", items.get(6).getText());
-        assertEquals(4, items.size() );
+        assertEquals(8, items.size());
 
         driver.quit();
     }
@@ -762,7 +774,7 @@ public class SeleniumTests {
         assertEquals("Тинькофф", items.get(4).getText());
         assertEquals("Яндекс", items.get(6).getText());
         assertEquals("Сбер", items.get(8).getText());
-        assertEquals(5, items.size() );
+        assertEquals(10, items.size() );
 
         WebElement detailsButton = driver.findElement(By.xpath("//table/tbody/tr[5]/td/form/button"));
         detailsButton.click();
@@ -807,7 +819,7 @@ public class SeleniumTests {
 
         assertEquals("Аналитик данных", items.get(0).getText());
         assertEquals("150000", items.get(1).getText());
-        assertEquals(1, items.size());
+        assertEquals(3, items.size());
 
         driver.quit();
     }
@@ -1287,7 +1299,7 @@ public class SeleniumTests {
         assertEquals("Аналитик данных", items.get(47).getText());
         assertEquals("120000", items.get(48).getText());
 
-        assertEquals(10, items.size());
+        assertEquals(50, items.size());
 
         driver.quit();
     }
@@ -1353,7 +1365,7 @@ public class SeleniumTests {
         assertEquals("Аналитик данных", items.get(47).getText());
         assertEquals("120000", items.get(48).getText());
 
-        assertEquals(10, items.size());
+        assertEquals(50, items.size());
 
         driver.quit();
     }
@@ -1400,7 +1412,7 @@ public class SeleniumTests {
         assertEquals("Специалист по машинному обучению", items.get(22).getText());
         assertEquals("", items.get(23).getText());
 
-        assertEquals(5, items.size());
+        assertEquals(25, items.size());
 
         driver.quit();
     }
@@ -1432,7 +1444,7 @@ public class SeleniumTests {
         assertEquals("Архитектор информационных систем", items.get(7).getText());
         assertEquals("200000", items.get(8).getText());
 
-        assertEquals(2, items.size());
+        assertEquals(10, items.size());
 
         driver.quit();
     }
@@ -1474,7 +1486,7 @@ public class SeleniumTests {
         assertEquals("Специалист по машинному обучению", items.get(17).getText());
         assertEquals("", items.get(18).getText());
 
-        assertEquals(4, items.size());
+        assertEquals(20, items.size());
 
         driver.quit();
     }
@@ -1503,7 +1515,7 @@ public class SeleniumTests {
         assertEquals("Аналитик данных", items.get(7).getText());
         assertEquals("150000", items.get(8).getText());
 
-        assertEquals(2, items.size());
+        assertEquals(10, items.size());
 
         driver.quit();
     }
@@ -1542,7 +1554,7 @@ public class SeleniumTests {
         assertEquals("Аналитик данных", items.get(17).getText());
         assertEquals("120000", items.get(18).getText());
 
-        assertEquals(4, items.size());
+        assertEquals(20, items.size());
 
         driver.quit();
     }
